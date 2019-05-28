@@ -1,0 +1,87 @@
+---
+# YAML Front Matter. All of this is available in the latex template.
+title: FPGA Benchmarking
+# subtitle: '**DRAFT** Compiled \DTMnow'
+institute: KULeuven, Faculty of Engineering Technology, Campus De Nayer, Sint-katelijne-waver
+opleiding: Elektronica-ICT
+afdeling: Afstudeerrichting ICT
+author:
+- Dries KENNES
+promotor:
+- type: 'Promotor:'
+  name: dr. ing. Kristof Van Beeck
+- type: 'Co-promotoren:'
+  name: ir. Nicolas Huot
+language: english
+date: Academiejaar 2018-2019
+keywords:
+- FPGA Benchmarking
+- Resource estimation
+
+# LaTex template variables, KULeuven style guides
+fontsize: 11pt
+linestretch: 1.25
+# Font
+# fontfamily: arev
+# fontfamily: merriweather
+# fontfamilyoptions: sfdefault
+
+papersize: a4
+pagestyle: fancy
+classoption:
+- twoside
+- openright
+- table
+documentclass: report
+margin-left: 3.5cm
+margin-right: 2.5cm
+margin-top: 3.5cm
+margin-bottom: 3.5cm
+lof: false # List of Figures
+lot: false # List of Tables
+toc: false # Table of Contents
+glossary: false # List of Symbols and Abbreviations
+listings: true
+caption: true
+codeBlockCaptions: true
+lang: en # For babel
+numbersections: true
+secnumdepth: 3
+# Manually added in a separate file.
+# This is required to preserve the ordering of the bibliography before the appendix.
+bibliography: bibliography.bib
+suppress-bibliography: true
+biblio-style: plainnat
+cite-style: round
+natbib: true
+link-citations: true
+# Show all references even if not used in the text.
+# nocite: '*'
+figPrefix:
+  - "figure"
+  - "figures"
+tblPrefix:
+  - "table"
+  - "tables"
+eqnPrefix:
+  - "equation"
+  - "equations"
+lstPrefix:
+  - "listing"
+  - "listings"
+secPrefix:
+  - "section"
+  - "sections"
+pairDelim: "and"
+lastDelim: ", and"
+linkReferences: true
+nameInLink: true
+
+# Preamble pages
+# --------------
+copyright: |
+  © Copyright KU Leuven
+
+  Without written permission of the supervisor(s) and the author(s) it is forbidden to reproduce or adapt in any form or by any means any part of this publication. Requests for obtaining the right to reproduce or utilise parts of this publication should be addressed to KU Leuven, Technology Campus De Nayer, Jan De Nayerlaan 5, B-2860 Sint-Katelijne-Waver, +32 15 31 69 44 or via e-mail iiw.denayer@kuleuven.be.
+
+  A written permission of the supervisor(s) is also required to use the methods, products, schematics and programs described in this work for industrial or commercial use, and for submitting this publication in scientific contests.

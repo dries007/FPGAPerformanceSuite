@@ -1,0 +1,7 @@
+# Ignore latex compiler stuff
+Thesis.*
+_minted-Thesis/
+
+# Do include results to we have a backup
+!Thesis.pdf
+!Thesis.latex

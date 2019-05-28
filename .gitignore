@@ -1,0 +1,5 @@
+# Global ignore for Jetbrains project folders
+.idea/
+
+# Python virtual enviroment
+.venv/

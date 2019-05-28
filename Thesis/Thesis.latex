@@ -1,0 +1,1482 @@
+% LaTeX template for Pandoc for a Masters Thesis at KULeuven FIIW (Faculteit Industriele Ingenieurswetenschappen)
+% Author: Dries Kennes, 2018-2019
+% Thanks to Dylan Van Assche for fixing the provided FIIW template and helping me track down issues.
+% This is a merger of the Pandoc default latex and (bad) FFW templates.
+% Since there are about 7 documents claiming to be the "standard" we are supposed to use, I'm picking whichever I think looks best.
+% Feel free to use and modify. I offer no compliance warrany. USE AT OWN RISK.
+% 
+\pdfminorversion=7
+\PassOptionsToPackage{unicode=true}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%colorlinks
+%dir && latex-dir-rtl
+%
+%fontsize, lang, papersize, classoption
+\documentclass[11pt,english,a4paper,twoside,openright,table]{report}
+%fontfamily
+\usepackage{lmodern}
+%linestretch
+\usepackage{setspace}
+\setstretch{1.25}
+%%% INCLUDED PACKAGES IN FIIW TEMPLATE START
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}             % commentarieer deze regel uit als je utf8 encoded files gebruikt in plaats van latin1
+\usepackage{listings}                   % voor het weergeven van broncode
+\usepackage{verbatim}                   % weergeven van code, commando's, ...
+\usepackage[extension=]{hyperref}       % maak PDF van de thesis navigeerbaar
+\usepackage{url}                        % URL's invoegen in tekst met behulp van \url{http://}
+\usepackage[small,bf,hang]{caption}     % om de captions wat te verbeteren
+\usepackage[final]{pdfpages}            % gebruikt voor het invoegen van het artikel in pdf-formaat
+\usepackage{pslatex}                    % andere lettertype's dan de standaard types
+\usepackage{lipsum}                     %
+\usepackage{sectsty}                    % aanpassen van de fonts van sections en chapters
+\usepackage[nottoc,numbib]{tocbibind}   % Bibliography mee in de ToC
+\allsectionsfont{\sffamily}
+\chapterfont{\raggedleft\sffamily}
+\usepackage{float}                      % De optie H voor de plaatsing van figuren op de plaats waar je ze invoegt. bvb. \begin{figure}[H]
+\usepackage{longtable}                  % tabellen die over meerdere pagina's gespreid worden
+%\usepackage[times]{quotchap}            % indien je fancy hoofdstuktitels wil
+\usepackage[none]{hyphenat}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{parallel}
+\usepackage{textpos}
+\usepackage{fancyhdr} % Voor \pagestyle{fancy}
+\let\origdoublepage\cleardoublepage
+\newcommand{\clearemptydoublepage}{%
+  \clearpage
+  {\thispagestyle{empty}\origdoublepage}%
+}
+\let\cleardoublepage\clearemptydoublepage
+% Indentation
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.25ex}
+\setlength{\abovedisplayskip}{12pt plus 3pt}
+\setlength{\belowdisplayskip}{12pt plus 3pt}
+\setlength{\abovedisplayshortskip}{12pt plus 3pt}
+\setlength{\belowdisplayshortskip}{12pt plus 3pt}
+
+\parskip 1mm
+% MFA: Zet de table caption correct cfr. richtlijnen
+\captionsetup[table]{
+  labelsep = newline,
+  justification=centering,
+  singlelinecheck=false,%%%%%%% a single line is centered by default
+  labelsep=space,%%%%%%
+  skip = \medskipamount}
+
+%%% END
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+
+%\usepackage[nomain,acronym,xindy,toc,nopostdot]{glossaries} % nomain, if you define glossaries in a file, and you use \include{INP-00-glossary}
+\usepackage[nomain,acronym,xindy,toc,nogroupskip,stylemods=longragged,style=longragged3col,nonumberlist]{glossaries-extra} % nomain, if you define glossaries in a file, and you use \include{INP-00-glossary}
+%\setlength{\glspagelistwidth}{0.2\textwidth}
+% \GlsXtrEnablePreLocationTag{Page: }{Pages: }
+\makeglossaries
+\usepackage[xindy]{imakeidx}
+\makeindex
+
+% -- IF START
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  %\usepackage[utf8x]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+%mathspec
+  \usepackage{unicode-math}
+%
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+%mathfont && mathspec
+%CJKmainfont
+%luatexjapresetoptions
+%CJKmainfont
+\fi
+% -- IF END
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+%indent
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+%verbatim-in-note
+%colorlinks
+%
+\usepackage{hyperref}
+\hypersetup{
+%title-meta
+            pdftitle={FPGA Benchmarking},
+%author-meta
+            pdfauthor={Dries KENNES},
+%keywords
+            pdfkeywords={FPGA Benchmarking, Resource estimation},
+%colorlinks
+            pdfborder={0 0 0},
+            breaklinks=true}
+%\urlstyle{same}  % don't use monospace font for urls
+%verbatim-in-note
+%geometry
+\usepackage[lmargin=3.5cm,rmargin=2.5cm,tmargin=3.5cm,bmargin=3.5cm]{geometry}
+%listings
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+%lhs
+%highlighting-macros
+%tables
+\usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{longtable}}{}
+%graphics
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+%links-as-notes
+%strikeout
+%
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%numbersections
+\setcounter{secnumdepth}{3}
+%pagestyle
+\pagestyle{fancy}
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+%header-includes
+% START include_header.tex
+\usepackage[table]{xcolor}
+\renewcommand{\chaptermark}[1]{%
+    \markboth{\MakeUppercase{%
+            \chaptername\ \thechapter.%
+            \ #1}}{}}
+
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\scriptsize\bfseries\sffamily\thepage}
+\fancyhead[LO,RE]{\scriptsize\bfseries\sffamily\leftmark}
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\scriptsize\bfseries\sffamily\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+\setlength{\headheight}{14pt}
+% commented out on accident?
+% \bfseries\sffamily\rightmark
+
+\usepackage{titlesec}
+\titleformat*{\section}{\bfseries\Large\sffamily}
+\titleformat*{\subsection}{\bfseries\large\sffamily}
+\titleformat*{\subsubsection}{\bfseries\normalsize\sffamily}
+\renewcommand{\familydefault}{\sfdefault}
+
+% \lstset{
+%   backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+%   basicstyle=\ttfamily\footnotesize,        % the size of the fonts that are used for the code
+%   breakatwhitespace=true,         % sets if automatic breaks should only happen at whitespace
+%   breaklines=true,                 % sets automatic line breaking
+%   captionpos=b,                    % sets the caption-position to bottom
+%   %commentstyle=\color{mygreen},    % comment style
+%   %deletekeywords={...},            % if you want to delete keywords from the given language
+%   %escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+%   extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+%   %frame=single,                    % adds a frame around the code
+%   keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+%   columns=flexible,
+%   %keywordstyle=\color{blue},       % keyword style
+%   %morekeywords={*,...},            % if you want to add more keywords to the set
+%   numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+%   %numbersep=5pt,                   % how far the line-numbers are from the code
+%   %numberstyle=\color{mygray}, % the style that is used for the line-numbers
+%   rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+%   %showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+%   %showstringspaces=false,          % underline spaces within strings only
+%   %showtabs=false,                  % show tabs within strings adding particular underscores
+%   stepnumber=5,                    % the step between two line-numbers. If it's 1, each line will be numbered
+%   %stringstyle=\color{mymauve},     % string literal style
+%   tabsize=2,                       % sets default tabsize to 2 spaces
+%   title=\lstname,                  % show the filename of files included with \lstinputlisting; also try caption instead of title
+%   literate=
+%   {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+%   {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+%   {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+%   {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+%   {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+%   {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+%   {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+%   {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+%   {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+%   {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+%   {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+%   {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+%   {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+%   {©}{{\copyright}}1
+% }
+% Fix listings not having breaks
+%\usepackage[none]{hyphenat}
+
+\usepackage{minted}
+\usemintedstyle{vs}
+\setminted{
+  breaklines=true,
+  linenos=true,
+  framesep=2mm,
+  baselinestretch=0.7,
+  tabsize=4,
+}
+\usepackage{etoolbox,xpatch}
+% No italic in code.
+%\AtBeginEnvironment{minted}{\let\itshape\relax}
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\xpatchcmd{\inputminted}{\minted@fvset}{\minted@fvset\dontdofcolorbox}{}{}
+\makeatother
+
+\usepackage[titletoc]{appendix}
+\usepackage{rotating}
+% for \DTMnow
+\usepackage[showzone=false]{datetime2}
+\let\oldaddcontentsline\addcontentsline
+% \usepackage{cleveref}
+\usepackage{lscape}
+\renewcommand{\arraystretch}{0.9}
+% END include_header.tex
+
+%acronyms
+\newacronym{FPGA}{FPGA}{Field Programmable Gate Array}
+\newacronym{CPU}{CPU}{Central Processing Unit}
+\newacronym{ASCI}{ASCI}{Application-Specific Integrated Circuit}
+\newacronym{ESA}{ESA}{European Space Agency}
+\newacronym{LUT}{LUT}{LookUp Table}
+\newacronym{IP}{IP}{Intellectual Property}
+\newacronym{CLB}{CLB}{Configurable Logic Block}
+\newacronym{RAM}{RAM}{Random-Access Memory}
+\newacronym{DSP}{DSP}{Digital Signal Processor}
+\newacronym{IO}{IO}{Input and Output}
+\newacronym{PCIe}{PCIe}{Peripheral Component Interconnect Express}
+\newacronym{HDL}{HDL}{Hardware Description Language}
+\newacronym{VHDL}{VHDL}{Very High Speed Integrated Circuit HDL}
+\newacronym{PAR}{PAR}{Place and Route}
+\newacronym{Yosys}{Yosys}{Yosys Open SYnthesis Suite}
+\newacronym{GPU}{GPU}{Graphics Processing Unit}
+\newacronym{MOSFET}{MOSFET}{Metal-Oxide-Semiconductor Field-Effect Transistor}
+\newacronym{Xilinx ISE}{Xilinx ISE}{Xilinx Integrated Synthesis Environment}
+\newacronym{JSON}{JSON}{JavaScript Object Notation}
+\newacronym{TCL}{TCL}{Tool Command Language}
+\newacronym{ISE}{ISE}{Xilinx Integrated Synthesis Environment}
+\newacronym{FLOPS}{FLOPS}{Floating Point Operations Per Second}
+\newacronym{GUI}{GUI}{Graphical User Interface}
+\newacronym{HKMG}{HKMG}{High-K Metal Gate}
+\newacronym{TSMC}{TSMC}{Taiwan Semiconductor Manufacturing Company}
+\newacronym{USA}{USA}{United States of America}
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,main=english]{babel}
+\else
+  % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+
+\title{FPGA Benchmarking}
+\author{Dries KENNES}
+\providecommand{\institute}[1]{}
+\institute{KULeuven, Faculty of Engineering Technology, Campus De Nayer, Sint-katelijne-waver}
+\date{Academiejaar 2018-2019}
+% ----- START DOCUMENT -----
+\begin{document}
+\pagenumbering{gobble}
+%include-before
+% START pre_body.tex
+\frenchspacing
+% END pre_body.tex
+% --- FIIW Title Page START
+\begingroup
+\definecolor{titlegreen}{RGB}{29,141,176}
+\thispagestyle{empty}
+\setlength{\unitlength}{1cm}
+\begin{picture}(0,0)(0,26)
+\hspace{-9em}\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{templates/cover_nl.pdf}
+\end{picture}
+\vspace{2em}
+\begin{flushright}
+%embargo
+\end{flushright}
+\vskip1in
+\vfill
+\begingroup
+  \fontsize{40pt}{12pt}\selectfont
+    \textcolor{titlegreen}{{\textsf{FPGA Benchmarking}}} \\\\
+\endgroup
+{\LARGE\textsf{}}
+\vfill
+\begin{flushright}
+    \textsf{\LARGE\textbf{Dries KENNES}}\\
+  \end{flushright}
+\vspace{10em}
+\begin{Parallel}{0.48\textwidth}{0.52\textwidth}
+  \ParallelLText{\noindent
+    \begin{list}{label}{\setlength{\leftmargin}{7em}\setlength{\labelsep}{0.5em}\setlength{\labelwidth}{8em}\setlength{\itemsep}{-.5ex}}
+            \large\item[\textsf{Promotor:}\hfill] \textsf{dr. ing. Kristof Van Beeck}
+            \large\item[\textsf{Co-promotoren:}\hfill] \textsf{ir. Nicolas Huot}
+            \end{list}
+  }
+  \ParallelRText{\noindent\vspace{1em}
+    \large\begin{flushright}
+      \textsf{Masterproef ingediend tot het behalen van \\
+        de graad van master of Science in de\\
+        industri\"ele wetenschappen: Elektronica-ICT Afstudeerrichting ICT}
+    \end{flushright}
+  }
+\end{Parallel}
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{0.75cm}
+\begin{flushright}
+  \textsf{Academiejaar 2018-2019}
+\end{flushright}
+\endgroup
+% --- END
+\setcitestyle{round}
+% Title
+%%\maketitle
+%%copyright
+\clearpage
+\thispagestyle{empty}
+\pagenumbering{gobble}
+\null
+\vfill
+© Copyright KU Leuven
+
+Without written permission of the supervisor(s) and the author(s) it is forbidden to reproduce or adapt in any form or by any means any part of this publication. Requests for obtaining the right to reproduce or utilise parts of this publication should be addressed to KU Leuven, Technology Campus De Nayer, Jan De Nayerlaan 5, B-2860 Sint-Katelijne-Waver, +32 15 31 69 44 or via e-mail \href{mailto:iiw.denayer@kuleuven.be}{\nolinkurl{iiw.denayer@kuleuven.be}}.
+
+A written permission of the supervisor(s) is also required to use the methods, products, schematics and programs described in this work for industrial or commercial use, and for submitting this publication in scientific contests.
+\clearpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+%toc (Table of Contents)
+%lot (List of Figures)
+%lof (List of Tables)
+%glossary
+% ==== DOCUMENT BODY
+\cleardoublepage
+\pagenumbering{arabic}
+\hypertarget{acknowledgments}{%
+\chapter*{Acknowledgments}\label{acknowledgments}}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+
+\pagenumbering{gobble}
+
+On the eve of my graduation as Master in Industrial Engineering in the wonderful field of electronics and IT, I would like to thank some people for their support over the past few years.
+
+First and foremost I'd like to thank my thesis supervisor Nicolas Huot and Kristof Van Beeck for their help and guidance on this last leg of my journey.
+
+I would also like to thank the friendly colleagues at Antwerp Space, in particular Jo Van Langendonck and Dave Geerardyn, for their help and warm welcoming environment.
+
+Thanks to my sister Lina for trying to get this document as free from spelling mistakes as possible. Lastly I thank my parents for their support throughout my entire school carrier, in particular the very intense preparatory program last year.
+
+\vspace{0.5cm} \hspace{1cm} \textasciitilde{} Dries Kennes
+
+\hypertarget{english-abstract}{%
+\chapter*{English Abstract}\label{english-abstract}}
+\addcontentsline{toc}{chapter}{English Abstract}
+
+\pagenumbering{roman}
+
+In the world of small batch hardware production, FPGAs are used to implement functionality that would normally require very expensive custom chips to be produced. Users traditionally rely on the limited and one-sided information provided by manufacturers and their own design experience to chose the right FPGA for the job.
+
+We believe that using custom benchmarks to generate relevant data will empower the user to make better estimates of both the FPGA's performance and the project's required resources. We developed a methodology and implemented software to automate the generation of statistics about FPGAs across different product families and even vendors.
+
+Alongside a number of existing benchmarks, we created a custom benchmark to test our methodology and implementation. Based on the results of these tests we conclude that it provides valuable insight into the performance of the FPGA, at the cost of additional effort and time to select and compute the benchmarks.
+
+\textbf{Keywords:} FPGA, Benchmarks, Performance analysis
+
+\hypertarget{nederlandstalig-abstract}{%
+\chapter*{Nederlandstalig Abstract}\label{nederlandstalig-abstract}}
+\addcontentsline{toc}{chapter}{Nederlandstalig Abstract}
+
+In de wereld van hardware in kleine oplagen worden FPGAs gebruikt om functionaliteit te implementeren die normaal onbetaalbare, op maat gemaakte chips, zou vereisen. Makers van deze producten zijn traditioneel afhankelijk van de fabrikanten en hun eigen ervaring voor het kiezen van een geschikte FPGA.
+
+We zijn er van overtuigd dat het testen van een selectie op maat gemaakte benchmarks de gebruiker in staat zal stellen gerichte objectieve cijfers te produceren. Zowel over de performantie van de FPGA als over wat het project vereist. Hiervoor hebben we een methodologie ontworpen en software geschreven die het produceren van deze cijfers vergaand automatiseert. De software is geschikt om verschillende productfamilies en zelfs fabrikanten met elkaar te vergelijken.
+
+Naast een selectie bestaande benchmarks hebben we ook onze eigen benchmark geïmplementeerd om de methodologie en software te testen. Gebaseerd op de resultaten van die tests concluderen we dat ons werk een waardevol inzicht bied. Dit inzicht komt ten koste van extra tijd en moeite die nodig is om geschikte benchmarks te selecteren en uit te voeren.
+
+\textbf{Sleutelwoorden:} FPGA, Benchmarks, Performantieanalyse
+
+\hypertarget{korte-samenvatting}{%
+\chapter*{Korte Samenvatting}\label{korte-samenvatting}}
+\addcontentsline{toc}{chapter}{Korte Samenvatting}
+
+\markboth{\MakeUppercase{Korte Samenvatting}}{}
+
+\renewcommand{\addcontentsline}[3]{}
+
+\hypertarget{inleiding}{%
+\section*{Inleiding}\label{inleiding}}
+\addcontentsline{toc}{section}{Inleiding}
+
+\renewcommand{\addcontentsline}[3]{\oldaddcontentsline{#1}{#2}{#3}}
+
+In de wereld van hardware worden FPGAs gebruikt om functionaliteit te implementeren die normaal onbetaalbare, op maat gemaakte chips, zou vereisen. De ruimtevaartindustrie is hiervan het schoolvoorbeeld door de zeer kleine oplagen van de meeste projecten. Maar in deze industrie is er nog een toegevoegde complexiteit: de gebruikte componenten moeten geschikt zijn voor de extreme omgeving. Dit vereist specifieke versies die lang op voorhand besteld moeten worden. Hierdoor is de karakterisatie van de FPGA en de specificaties van het project extra belangrijk.
+
+Ontwerpers van projecten die FPGAs gebruiken zijn traditioneel afhankelijk van de fabrikanten en hun eigen ervaring voor het kiezen van een geschikt model. We zijn er van overtuigd dat objectieve, relevante cijfers kunnen helpen bij deze selectie.
+
+\renewcommand{\addcontentsline}[3]{}
+
+\hypertarget{literatuurstudie}{%
+\section*{Literatuurstudie}\label{literatuurstudie}}
+\addcontentsline{toc}{section}{Literatuurstudie}
+
+\renewcommand{\addcontentsline}[3]{\oldaddcontentsline{#1}{#2}{#3}}
+
+De FPGA industrie is een niche, traditioneel zeer gesloten industrie. Dit maakt dat er weinig gepubliceerde werken zijn over dit onderwerp. Veel studies die we vonden zijn oud of toetsen andere onderwerpen af.
+
+Wel relevant is de zogenoemde ``stamping methodology'' ofwel postzegelmethode. Die bestaat er uit een FPGA maximaal te vullen met identieke kopieën van hetzelfde ontwerp. Als de FPGA volledig vol zit wordt dan de kloksnelheid gemeten. Deze methode is vandaag de industriestandaard. Het ontwerp dat gekozen wordt is daarbij zeer belangrijk. Spijtig genoeg kan de fabrikant hier gemakkelijk een ontwerp kiezen dat alleen de eigen sterktes benadrukt en dat de zwakke punten negeert.
+
+Nadat we onze werkingsmethode hadden uitgeschreven hebben we een project uit 2017 van de European Space Agency (ESA) ontdekt. De methodologie van dit project, de ``Open ESA FPGA Benchmark Suite'', lijkt op de onze maar is beperkter in implementatie.
+
+\renewcommand{\addcontentsline}[3]{}
+
+\hypertarget{methodologie-en-implementatie}{%
+\section*{Methodologie en Implementatie}\label{methodologie-en-implementatie}}
+\addcontentsline{toc}{section}{Methodologie en Implementatie}
+
+\renewcommand{\addcontentsline}[3]{\oldaddcontentsline{#1}{#2}{#3}}
+
+Het doel van deze thesis is het ontwikkelen van een platform dat een projectontwikkelaar in staat stelt objectieve, relevante cijfers te genereren over de FPGA en het project. Deze cijfers kunnen dan gebruikt worden tijdens de selectieprocedure.
+
+Hiervoor hebben we een softwarepakket ontwikkeld in Python dat het proces bijna volledig automatiseert. De gebruiker kan een lijst met code bestanden doorgeven samen met een lijst van parameters. De software stuurt dan volautomatisch de software van de FPGA fabrikant aan. Deze zet de code om naar een hardware ontwerp voor de FPGA en bepaalt daarbij eigenschappen zoals de maximale klokfrequentie en de hoeveelheid middelen van de FPGA het ontwerp gebruikt.
+
+Het ontwerpen van een benchmark wordt ook besproken. Vooral belangrijk is dat code geen IO pinnen aanspreekt maar interne registers gebruikt. IO pinnen zijn namelijk in snelheid gelimiteerd en bevinden zich enkel langs de buitenkant van de chip.
+
+De verkregen data is vooral interessant als ze zou kunnen worden voorgesteld als een eenzijdig getal dat eenvoudig vergelijkbaar is met andere resultaten. Spijtig genoeg bestaat dit niet, omdat een FPGA te toepassingsspecifiek is. Daarom stellen we de resultaten voor als een grafiek die de gebruiker zelf kan interpreteren.
+
+Per softwarepakket van de fabrikant is er een andere aanpak nodig. We kozen voor Vivado (van Xilinx) en nxPython (van NanoXplore) omdat Xilinx de grootste fabrikant is en omdat Antwerp Space (onze industriepartner) een specifieke interesse heeft voor NanoXplore. De integratie van deze softwarepakketten in onze software wordt uitgebreid besproken. Ten slotte kiezen we ook een FPGA model per fabrikant om onze benchmarks mee te testen.
+
+\renewcommand{\addcontentsline}[3]{}
+
+\hypertarget{benchmarks-en-resultaten}{%
+\section*{Benchmarks en Resultaten}\label{benchmarks-en-resultaten}}
+\addcontentsline{toc}{section}{Benchmarks en Resultaten}
+
+\renewcommand{\addcontentsline}[3]{\oldaddcontentsline{#1}{#2}{#3}}
+
+Onze belangrijkste testgevallen zijn de ISCAS'89 benchmark set en een zelfgemaakte combinatie tussen een van deze ISCAS'89 benchmarks en een FIR filter.
+
+De ISCAS'89 set is een lijst van benchmarks die is ontworpen om digitale logica mee te testen. De benchmarks bevatten alleen maar simpele gates waardoor het een ideale basis vormt waar bovenop een ander, complexer, ontwerp kan worden getest.
+
+Om de combinatie van achtergrond- en voorgrond-ontwerp te kunnen testen hebben we een bovenlaag ontworpen die ervoor zorgt dat de verschillende ontwerpen niet van elkaar gescheiden kunnen worden. Dit levert realistischere resultaten op.
+
+De combinatietest resulteerde in bruikbare informatie voor ons testgeval van Xilinx. De software van NanoXplore heeft nog enkele problemen die door tijdgebrek niet zijn opgelost of omzeild, waardoor we hiervoor geen resultaten hebben van de combinatietest.
+
+\renewcommand{\addcontentsline}[3]{}
+
+\hypertarget{conclusie}{%
+\section*{Conclusie}\label{conclusie}}
+\addcontentsline{toc}{section}{Conclusie}
+
+\renewcommand{\addcontentsline}[3]{\oldaddcontentsline{#1}{#2}{#3}}
+
+Onze software maakt het overbodig om manueel vele iteraties van een ontwerp te testen in de zoektocht naar een optimum in performantie. Door de vergaande automatisering kunnen er veel meer datapunten worden berekend. Dit maakt het gemakkelijker om zowel de performantie van de FPGA te bestuderen als de performantie van (een onderdeel van) een ontwerp. Dit was het beoogde resultaat van deze thesis.
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\contentsname}
+\begin{spacing}{0.5}
+\tableofcontents
+\end{spacing}
+
+\begin{spacing}{0.5}
+\listoftables
+\end{spacing}
+\phantomsection
+
+\begin{spacing}{0.5}
+\listoffigures
+\end{spacing}
+\phantomsection
+
+\printglossary[title=List of Symbols and Abbreviations]
+
+\hypertarget{sec:introduction}{%
+\chapter{Introduction}\label{sec:introduction}}
+
+\pagenumbering{arabic}
+
+In this chapter we first introduce our industry partner. Then we provide context on our research topic. Finally we state our goals and the structure of this thesis.
+
+\hypertarget{industrial-background}{%
+\section{Industrial Background}\label{industrial-background}}
+
+This thesis is made in cooperation with Antwerp Space. Antwerp Space is a Belgian satellite communications company with over 70 engineers and PhDs. It was founded in 1962 as part of Bell Telephone. In 2010 it was bought by OHB SE, a European space and technology group. Since then the company goes by its current name. Their activities include commercial ground and onboard modem and RF converters, test systems and integration of onboard communication subsystems.\footnote{\href{https://www.antwerpspace.be}{\texttt{www.antwerpspace.be}}}
+
+As a company active in the aerospace industry, Antwerp Space is interested in \gls{FPGA}s to use in small batch space grade equipment. Thanks to its flexibility, high achievable clock speeds, and parallel nature of its internal structure, an \gls{FPGA} can process more data with lower latency than a \gls{CPU}. It is the equivalent of creating dedicated hardware, but at a fraction of the cost of a custom chip. The initial cost estimate for an \gls{ASCI} design is in the tens of millions of dollars.
+
+Aerospace is a complex industry. Components like \gls{FPGA}s and \gls{CPU}s need to be able to handle not only factors such as extreme temperature swings but also much more radiation than is normal on the surface of Earth. Lead times for space grade components in the order of 40 weeks are no exception. This means that concurrent design of all the aspects of a system is a necessity. It requires early prediction of engineering budgets including the \gls{FPGA} resources.
+
+\hypertarget{context}{%
+\section{Context}\label{context}}
+
+The space industry requires extensive analysis of every component. Critical components -like \gls{FPGA}s- are chosen with large safety margins and contingencies. The margins and contingencies are well-studied, managed and controlled. Two relevant examples from the \gls{ESA} standard \mintinline[]{text}{SRE-PA/2011.097}: \emph{``R-SW-1: Any on-board memory (Random Access Memory RAM used for code and/or data) shall include a memory margin of at least 50\%.''} and \emph{``R-SW-2: Any on-board processor peak usage shall not exceed 50\% of its maximum processing capability.''} \citep{esamargins}. This margin is 50\% extra on top of the contingency, which is the maximal expected required amount needed. This value is in turn based on the current best estimate of the relevant resource requirement. This margin can drive up component cost considerably. It can also cascade into additional power consumption, causing those estimates, contingencies, and margins to go up as well. Figure~\ref{fig:margins} illustrates the definitions of margin and contingency as defined by NASA \citep{NASAmargins}.
+
+\begin{figure}
+\hypertarget{fig:margins}{%
+\centering
+\includegraphics{assets/NASA_Margin_and_Contingency_Definitions.pdf}
+\caption{Margin and contingency visualized.}\label{fig:margins}
+}
+\end{figure}
+
+This thesis proposes that it is possible to create a better resource and performance estimation for \gls{FPGA} components based on project specifications and benchmarking. The project specifications are used to select circuits to benchmark that have a similar footprint to those that will be used in the final design. The specifications also help inform the boundaries the benchmarking takes place in.
+
+Eliminating uncertainty entirely is not possible without having a complete design. By automating the process of running many different designs, potentially on multiple target devices, a comprehensive dataset can be produced. This will help determine the best estimate, which hopefully snowballs into a larger overall margin. For reference: The current estimates made by Antwerp Space are up to 100\% too high.\footnote{Based on internal, confidential numbers.}
+
+There are two approaches to improving these estimates: On the one hand the resource usage of the intended design can be improved. On the other hand, the performance of the target device can be better characterized. Both of these points could be addressed by customized benchmarking.
+
+Today the primary source of information about \gls{FPGA} performance are the manufacturers themselves. This information should be used with care as a conflict of interest is at play here. The published statistics will highlight the superior areas over the competition. These areas may not line up with the intended use case at all. On top of that, different manufactures do not use the same standards when it comes to publishing statistics, so figures like ``maximal frequency'' and ``\gls{LUT} count and size'' are not really comparable without additional context.
+
+\hypertarget{goals}{%
+\section{Goals}\label{goals}}
+
+This thesis focuses on researching and implementing a benchmarking based methodology that enables more accurate early estimation of required \gls{FPGA} resources. This implementation should be able to compare devices from different manufacturers. Our intention is to make it easy to add to, or change the benchmarked algorithms to fit the needs of the end user to allow them to perform a detailed and targeted suite of tests.
+
+To summarize, our main research question is: \emph{Does a benchmarking based methodology enable an accurate and precise early estimation of required \gls{FPGA} resources?}
+
+With:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Accurate}: The final resource budget has to be within the boundaries of the estimate.
+\item
+  \emph{Precise}: The boundaries have to be as small as possible.
+\item
+  \emph{Early}: With only limited knowledge of the algorithm that will be implemented on the \gls{FPGA} and its dimensioning characteristics.
+\end{itemize}
+
+\hypertarget{thesis-outline}{%
+\section{Thesis Outline}\label{thesis-outline}}
+
+The rest of this thesis is split into six chapters. In chapter \ref{sec:litstudy} we start with \gls{FPGA} fundamentals, describe related work and industry standard methods of benchmarking. In chapter \ref{sec:methodology} we describe our methodology, the software we have created for this project, what makes a good benchmark, and what output data we expect. Next, in chapter \ref{sec:implementation} we go in depth on how our software works, how it interacts with the \gls{FPGA} vendor's software, and which devices we used as test cases. Then in chapter \ref{sec:benchmarks} we show example benchmarks, and our solution for occupying the routing fabric. In chapter \ref{sec:results} we present the results of those benchmarks. Finally in chapter \ref{sec:conclusion} we summarize our conclusion of this thesis.
+
+\hypertarget{sec:litstudy}{%
+\chapter{Literature Study}\label{sec:litstudy}}
+
+In this chapter we explain \gls{FPGA} fundamentals, study the state-of-the-art, examine current industry methodologies for benchmarking \gls{FPGA}s and the most used provider of \gls{IP} cores used by those benchmarks. We also address the Open ESA FPGA Benchmark Suite.
+
+\hypertarget{fpga-fundamentals}{%
+\section{FPGA Fundamentals}\label{fpga-fundamentals}}
+
+Field Programmable Gate Arrays (\gls{FPGA}s) are integrated circuits based around configurable digital logic. Their configuration is loaded every time the device starts up, and can thus be reprogrammed. This is where the ``Field Programmable'' part of the name comes from. Historically the digital logic was an array of single purpose logic gates (hence ``Gate Array'') which could be interconnected. The individual gates have been replaced by Lookup Tables (\gls{LUT}s) which are more flexible. \citep{maxfield2004design}
+
+The main advantages of \gls{FPGA}s are their flexibility and scalability. Their unit cost is low compared to the cost of developing even a single iteration of a custom \gls{ASCI} design. This makes using them attractive in virtually every scenario where the expected sale volume is less than the order of tens of millions of devices. They an also be reconfigured later, which means that some types of bugs can be fixed without having to create a new (expensive) hardware revision.
+
+\hypertarget{architecture}{%
+\subsection{Architecture}\label{architecture}}
+
+An \gls{FPGA} is a matrix of Configurable Logic Blocks (\gls{CLB}s). Every \gls{CLB} contains at least a \gls{LUT}, a flip-flop and multiplexers to configure the inputs and outputs as illustrated by figure~\ref{fig:clb}. The \gls{LUT} is used to emulate any combinatorial logic, the flip-flop is used to combine these combinatorial elements to create sequential circuits. \citep{keim2018}
+
+\begin{figure}
+\hypertarget{fig:clb}{%
+\centering
+\includegraphics[width=\textwidth,height=2.5cm]{assets/CLB.pdf}
+\caption{A simple \gls{CLB} design.}\label{fig:clb}
+}
+\end{figure}
+
+In between the \gls{CLB}s is a routing fabric that allows the different \gls{CLB}s to interconnect as illustrated by figure~\ref{fig:fpgafabric}. There are usually other blocks in the matrix as well, such as dedicated \gls{RAM} blocks, \gls{DSP} blocks (hardware multipliers with extra features like accumulators), \gls{IO} blocks, and high speed interfaces like \gls{PCIe}.
+
+\begin{figure}
+\hypertarget{fig:fpgafabric}{%
+\centering
+\includegraphics{assets/FGPA_fabric.pdf}
+\caption{A symbolic representation of \gls{FPGA} fabric.}\label{fig:fpgafabric}
+}
+\end{figure}
+
+\hypertarget{design-and-programming}{%
+\subsection{Design and Programming}\label{design-and-programming}}
+
+Programming an \gls{FPGA}, or rather, creating the configuration that is loaded into the device on startup, usually involves a computer aided design tool. The user creates a design in a Hardware Description Language (\gls{HDL}) such as \gls{VHDL} or Verilog. From this design a netlist is generated. The netlist describes the connectivity of the fundamental building blocks of the \gls{FPGA}. This process is called ``synthesis''.
+
+After synthesis the design must be mapped to the actual \gls{FPGA} fabric in a process called Place And Route (\gls{PAR}), eventually resulting in a configuration that can be programmed into the \gls{FPGA}. Before this is done, a design is normally verified with timing analysis and simulations.
+
+Most commercially usable (that can generate netlists for actually existing hardware, not only for academical models) synthesis and \gls{PAR} software is proprietary and specific to the \gls{FPGA} manufacturer. Examples include Xilinx' Vivado\footnote{\href{https://www.xilinx.com/products/design-tools/vivado.html}{\texttt{www.xilinx.com/products/design-tools/vivado.html}}} and Intel Quartus Prime\footnote{\href{https://www.intel.com/content/www/us/en/software/programmable/quartus-prime/overview.html}{\texttt{www.intel.com/content/www/us/en/software/programmable/quartus-prime/overview.html}}}. An honorable mention goes out to the \gls{Yosys}\footnote{\href{http://www.clifford.at/yosys/}{\texttt{www.clifford.at/yosys/}}} project which created a completely open source toolchain that supports the Lattice iCE40 and most of the Xilinx 7-Series \gls{FPGA}s.
+
+\hypertarget{related-work}{%
+\section{Related work}\label{related-work}}
+
+\citet{njuguna2008} surveys a number of benchmarks and related studies. They focus on general purpose computing or on the performance of the \gls{FPGA} toolchains. For example: the RAW Benchmark Suite \citep{rawMIT} focuses on ``comparing reconfigurable computing systems''. Many of the benchmarks also focus on a single test case and are not extendable to include others. For example: the LINPAC Benchmark \citep{dongarra2003linpack} tests (floating point) performance by solving systems of linear equations. The study remarks that \emph{``Evidently, some of the benchmarks are very old relative to modern \gls{FPGA} technology.''}, and by now this study itself is over 10 years old. Most of them, are not relevant for this thesis. A notable exception would seem to be OpenFPGA.org. Unfortunately OpenFPGA.org no longer exists and their website is no longer available. Not even archive.org has a copy unfortunately.
+
+\citet{selvaraj2013} evaluates more recent tools, but only for using FPGAs to accelerate general computation, augmenting or replacing \gls{GPU}s. The discussed tools for generation of \gls{HDL} from normal source code are interesting in the context of this thesis. This approach would allow a multitude of tests to be written in more high level languages, or have them conditionally generate the required \gls{HDL}. Spector \citep{Gautier2016} is a high level synthesis benchmark based on OpenCL. They reuse/adapt part of the OpenDwarfs \citep{Krommydas2016} project's benchmarks, which are also focused on parallel computing.
+
+\citet{vansteenkiste2015} points out that there is also a significant difference between academic and commercial results. Their conclusion is that the academic state-of-the-art is (far) behind the commercial reality, especially when comparing algorithm optimizations. This is important to consider when comparing the results from this thesis to other sources, as this thesis makes use of commercial toolchains.
+
+Comparing devices across different technology nodes (the manufacturing process) is difficult. For \gls{MOSFET} technology, there is a scaling law known as ``Dennard scaling''. It states that as the transistor technology get 30\% smaller, their speed increases by about 40\%. \citep{Dennard1975} Scaling laws allow a rough estimation of what a speed increase could be from one device to another, but care must be taken that the architectures remain comparable. Another note is that the law was written in 1975. In the more recent past, the increase in speed has slowed down. \citep{Bohr2007}
+
+Titan \citep{murray2013titan} utilize hybrid toolchains (commercial and academic) to reach more realistic results, but they only support one vendor. Industry players such as Xilinx and Intel (previously Altera) release white papers and technical reports on their benchmark methodology and results, such as \citet{xilinx2017}, \citet{altera2007}. Their focus is on showing a competitive edge, in both hardware and software. This is an obvious conflict of interest. We do however think their methodology is worth examining, which we do in the next section.
+
+\hypertarget{stamping-methodology}{%
+\section{Stamping Methodology}\label{stamping-methodology}}
+
+Both Intel and Xilinx use the stamping methodology as described in \citet{altera2008} as illustrated in figure~\ref{fig:stamping}. It consists of selecting a \gls{HDL} design (called cores or stamps) and instantiating it multiple times in the \gls{FPGA}. This can be used to test maximal speed and maximal utilization of \gls{FPGA} resources, but in reality it is more of a test of the capabilities of the design software. Since in almost all cases the use of this vendor specific design software is mandatory, it is considered part of this methodology.
+
+Shift registers are added between the \gls{IO} signals of the cores and the \gls{IO} pins of the \gls{FPGA}. This prevents the design from being optimized away by the synthesis tools. Caution must be exercised to make sure that the \gls{IO} wrapping is not the critical path and does not add too much overhead. This would defeat the purpose of testing the different designs. To avoid this, the wrapping logic and cores run asynchronously on separate clocks.
+
+\begin{figure}
+\hypertarget{fig:stamping}{%
+\centering
+\includegraphics{assets/stamping_methodology.png}
+\caption{Stamping methodology as visualized by \citet{xilinx2017}.}\label{fig:stamping}
+}
+\end{figure}
+
+In most published results, the \gls{FPGA} is filled to the point where the software can no longer place and route all the signals. The utilization is then measured, along with the maximal frequency. Although we think this approach may be useful to compare the efficiency of the design software, we don't think it is a good way to compare different architectures or devices. It does not provide much insight into the actual limiting factors of a device.
+
+The design chosen as stamp is very important. A design can, due to programmer choice or pure coincidence, be more suited for one architecture or optimization algorithm over another. This is why most published benchmark results will include a set of designs. Those designs must be sourced from somewhere of which the most popular freely available source is OpenCores.
+
+OpenCores is a website and organization which ``is a community portal for professionals, amateurs, and enthusiasts interested in the field of digital design engineering. The site gives users open access to view, download, reuse, and share gateware designs. OpenCores specializes on bundles of structured files forming self-confined units, most commonly known as \gls{IP} cores, coded in \gls{HDL}''.\footnote{\href{https://opencores.org/about/mission}{\texttt{opencores.org/about/mission}}}
+
+Both Intel and Xilinx use designs from OpenCores in their benchmarks, as well as private designs. Those private designs are often supplied by their customers and cannot be shared publicly. This makes their results of limited value since they cannot be reproduced independently. \citep{altera2008}
+
+The downside of stamping is that it does not often match realistic use an \gls{FPGA}. A real design will never attempt to make use of all available resources, since the design software will most likely not be able to compute the placement and routing. Stamping does give a good rough indication for maximal usable capacity that can be compared with other devices or vendors, if the same parameters are used. It cannot be used to find the optimal use case for one device since it offers no detailed information. Another danger is that the intended use case might not align well with chosen designs.
+
+\hypertarget{open-esa-fpga-benchmark-suite}{%
+\section{Open ESA FPGA Benchmark Suite}\label{open-esa-fpga-benchmark-suite}}
+
+While we were implementing our already designed methodology, we found that the European Space Agency (\gls{ESA}) had made an effort to create a standardized benchmark suite, not only for \gls{ESA} projects but for the \gls{FPGA} industry as a whole. The project is called ``Open ESA FPGA Benchmark Suite'' \citep{mybravejourney}\footnote{Source available online: \href{https://gitrepos.estec.esa.int/FPGA/open-ESA-FPGA-benchmark-suite}{\texttt{gitrepos.estec.esa.int/FPGA/open-ESA-FPGA-benchmark-suite}}}. The suite is designed to enable the public sharing of configuration and benchmark data by letting anyone create additional benchmarks and publishing the results.
+
+The currently provided benchmark circuits are a set of small circuits which address only one particular architectural feature (such as \gls{LUT}s, \gls{DSP} blocks, memory blocks, \ldots) and more complex circuits which represent arithmetic functions (such as a moving average filter). Design software support is limited to \gls{Xilinx ISE} (deprecated since 2012) and Microsemi Libero, with upcoming support for NanoXplore's synthesis tool NanoXmap being mentioned as in progress (August 2017). Operating system support is limited to Linux. The tool is not capable of parsing the output of the design software to produce a coherent report.
+
+While researching this software, we found that it is not user friendly. In our opinion it is too complex to use and configure. It requires 5 languages (\gls{JSON}, \gls{TCL}, Python, \gls{VHDL}, and Bash or C-shell) and quite a bit of work to add any new device, vendor or benchmark. Some parts of the software are hardcoded to the environment of the original author, complicating the initial setup on our computer. The software flow also seems to be designed around \gls{ISE} with little regard given to other vendor's software. This is particularly noticeable in the use of \gls{TCL} scripts to create projects and control various bits of the synthesis process.
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+Only the Open ESA FPGA Benchmark Suite is similar to what we have in mind with this thesis. It is unfortunate that we only discovered it after starting work on the implementation of our methodology, as it would have provided a nice starting point. It is unfinished and appears to be abandoned, no commits have been made to the code since May 2017. The experienced difficulty in setting up the software, combined with the status of our own implementation at the time we learned of its existence made us decide against using it any further.
+
+A lot of time was spent trying to find more prior research, but this was the most relative selection of works. Various other studies do use benchmarking but they have other goals. The results of these studies cannot be used to compare various \gls{FPGA}s or multiple vendors, or are only targeted to academic toolchains.
+
+It is our belief that this lack of relevant published prior works is due to the industrial nature of this thesis. It is a niche, closed industry. We speculate that if this kind of work is done in companies, their methodology is kept secret. Another possibility is that many choose a product family based on experience or with help from a manufacturer's data sheet. Then development can happen on the largest device in that family and when the design is (almost) finished, a more appropriately sized \gls{FPGA} is chosen. In the space industry this is rarely done given the inherent cost of swapping components. This leads to a situation where the biggest possible \gls{FPGA} is used, which benefits manufacturers, making them unlikely to try and improve this situation.
+
+\hypertarget{sec:methodology}{%
+\chapter{Methodology}\label{sec:methodology}}
+
+This chapter explains why we created custom software with top-down overview of what it does and how it works. We will explain what makes a good benchmark circuit. Lastly, we state our expectations of the output data, our representation of it and how to analyze it.
+
+\hypertarget{overview}{%
+\section{Overview}\label{overview}}
+
+The ultimate goal of this thesis is to develop a framework which enables a hardware design engineer to easily determine the most optimal \gls{FPGA} for a specific project. Currently, the selection of the \gls{FPGA} device is often determined based on the experience of the design engineer and the manufacturer's datasheets -which are often biased- rather then quantitative measures. Therefore, in this thesis we aim to develop a methodology which is able to automatically indicate which \gls{FPGA} device is most suited for a specific project.
+
+To achieve this, we developed an \gls{FPGA} performance suite which is able to test the performance of devices from multiple vendors given different input parameters and specific \gls{VHDL} input designs. The primary output statistic our system generates is the maximum clock speed a design can run at, although the end user can use another statistic. These output statistics allow the user to select the most suited \gls{FPGA} based on quantitative figures. The design in question is determined by the end user, so that it can be similar to the final design that will be implemented in the project. It makes little sense to use a memory intensive design for a project that will mostly use \gls{DSP}s for example.
+
+\hypertarget{automation}{%
+\section{Automation}\label{automation}}
+
+It is our belief that the key to accurate resource estimations is to have sufficient access to relevant data. The data currently presented by manufactures is one-sided, it highlights their own advantage and omits potential downsides. With in-house generated data, all aspects of the data are visible and specific tests to find weaknesses are possible.
+
+To make it easy to generate this data we are creating a program that can automatically run a suite of benchmarks that are highly customizable. The program will be able to generate statistics such as the maximal frequency or the resource utilization in number of \gls{FPGA} primitives (fundamental building blocks).
+
+To facilitate variance of components, such as the bit width of a signal input to a filter, parameters (also called generics) are possible in the top level of a \gls{VHDL} design file. The user must be able to specify these with great flexibility. This limits the amount of work needed to generate the required input files. For example: With a fully generic FIR filter implementation in \gls{VHDL}, it would be possible to test everything from a small 7 tap filter with 8 bit data and 8 bit coefficients, to a large 129 tap filter with 32 bit data and 24 bit coefficients, and everything in between.
+
+\hypertarget{software-architecture-overview}{%
+\section{Software Architecture Overview}\label{software-architecture-overview}}
+
+\begin{figure}
+\hypertarget{fig:methodology}{%
+\centering
+\includegraphics{assets/Methodology.pdf}
+\caption{The program's structure.}\label{fig:methodology}
+}
+\end{figure}
+
+Diagram figure~\ref{fig:methodology} illustrates the basic working principle of our software. We'll be building on this diagram to explain elements of the software throughout this thesis. A complete version of the diagram with more details about the implementation is used in section~\ref{sec:ImplementationOverview}.
+
+The main program (``\gls{FPGA} Performance Suite'' in the diagram) is tasked with running the benchmarks as specified by the user input and collecting the output data. Every one of those benchmark tasks is the combination of a specific vendor, a set of input parameters, and a circuit design described by a set of input \gls{VHDL} files.
+
+To compute the results of a benchmark, our software must be capable of running the \gls{FPGA}'s synthesis software with a set of input parameters and extract all useful information from its output. Because running large benchmarks can take a long time, it is best if they can be run in parallel. Sections \ref{sec:vivado} and \ref{sec:nanoxplore} go into detail on the specifics of individual vendor software.
+
+\hypertarget{benchmark-design}{%
+\section{Benchmark Design}\label{benchmark-design}}
+
+Every benchmark is a combination of \gls{VHDL} code and a set of input parameters. The code defines the circuit design under test. It can be a file chosen from a preexisting set or it can be created by the engineer specifically for a project. By using the input parameters we can create a great variety of designs with a small set of files.
+
+The intended project of the end user determines what benchmarks will yield relevant data. This means it is not possible to create a generic set of \gls{VHDL} design files to use. Such generalization would make the data less relevant.
+
+We did not focus on creating a set of benchmarks, since they can be created or sourced elsewhere. Instead we focused on making it easy for the end user to integrate those files. We will however go into more detail on what makes a good benchmark and what needs to be avoided.
+
+\hypertarget{sec:benchmarkio}{%
+\subsection{Benchmark IO}\label{sec:benchmarkio}}
+
+When creating or selecting the file to be benchmarked, it is important to make sure that the design is not accidentally constrained by its \gls{IO}. If the data path includes \gls{IO} pins, the maximum speed can be limited by the speed of the \gls{IO} blocks instead of the intended benchmark.
+
+Even if the speed of the \gls{IO} blocks is not considered an issue, they should be avoided because they are placed on the edge of the routing fabric. This creates a situation where the routing is forced to place the design on the edge of the routing area or use long signal paths to connect the design to the \gls{IO} blocks.
+
+This situation can be prevented by using an internal register as input and output. The synthesis software must then be instructed to preserve those registers, since it will attempt to remove any part of the design it thinks is useless. The implementation of this is vendor specific, since there is no standardization for this in \gls{VHDL}.
+
+\hypertarget{sec:routing}{%
+\subsection{Routing}\label{sec:routing}}
+
+Figure~\ref{fig:fpgafabric} also illustrates that the routing fabric is an important resource to consider when benchmarking an \gls{FPGA}. Experience shows that routing is often a limiting factor that is hard to predict. Comparing countable quantities like the number of \gls{LUT}s or \gls{DSP} blocks used by a particular design is easier than comparing how much of the routing infrastructure it uses. The routing fabric also varies greatly by \gls{FPGA} architecture, some have better routing infrastructure than others.
+
+With small designs the routing infrastructure is not stressed. There is enough space on the routing fabric for the \gls{PAR} algorithm to optimize for speed. A larger design -one that takes a significant percentage of the chip- cannot be treated in the same way. Larger designs will therefore have longer propagation delays. We propose to use a known background filler pattern to take up space on the chip i.e.~loading the routing resources, then add the benchmark design. This forces the synthesis software to compete with a known quantity of used resources.
+
+To estimate how much background filler is needed, the possible filler patterns and the actual benchmark design are run trough the same benchmark process separately. This results in a dataset with the \gls{LUT} utilization and maximal clock frequency. A pattern can be chosen so that it does not interfere with the expected maximal clock frequency of the actual benchmark design. If the filler's maximal clock speed is lower than the actual design, it would drag the total clock down along with it.
+
+The quantity of \gls{LUT}s used is known per instance of a design. This allows the user to estimate how many times a pattern must be placed to reach the desired level of global utilization. This filler quantity can be subtracted from the output data to get an estimate of the utilization by the actual design. Some software keeps detailed records of the resources used per hierarchical part of a design, which can be used to verify those estimates.
+
+The background filler should be architecture neutral i.e.~be made of only the lowest level gates and flip-flops. It should be flexible enough to allow its use in many different benchmarks, so that the output data can be compared more directly. We opted for the ISCAS'89 \citep{iscas89} set. It contains 31 circuits with varying size and complexity. The circuits are mostly combinatorial logic with a few D flip-flops. This makes it great background filler because it takes up \gls{LUT}s but no special blocks such as \gls{DSP}s. More details in section~\ref{sec:iscas89}.
+
+One potential issue is that the \gls{PAR} algorithms used by vendors are generally capable of determining data dependencies. The software will attempt to segregate the benchmark into multiple sections if there is no link between them, as illustrated by the background colors in figure~\ref{fig:fpgafabric}. This negates the benefit of using the background filler pattern. To combat this, section~\ref{sec:topmodule} implements a top level circuit design that links the different parts of the benchmark together.
+
+\hypertarget{output-data}{%
+\section{Output Data}\label{output-data}}
+
+Generating a readable output format is important, and may appear simple at first but it must not be overlooked. A graph is great for one or two-dimensional inputs. After that the best visualization depends largely on what those input dimensions represent. Because of the input flexibility, that is hard to predetermine. Our program will output the raw data it gathers, in a format that can be easily read by the end user or by other programs to assist in visualizing the results.
+
+One potential issue is the complexity in comparing the output data. While maximal speed (expressed as a clock frequency) is a number comparable across all devices, the primitives typically differ per \gls{FPGA} family or architecture. Although they generally at least contain the number of \gls{LUT}s, Block \gls{RAM}s, and \gls{DSP} blocks. Care must be taken when comparing the raw data. The architecture of the primitives may not be the same, leading to incomparable data.
+
+The number of used primitives is more useful as output when used as a fraction of the number of primitives available, instead of as an absolute number. This is called the ``utilization rate''. This metric is used by manufacturers in papers and published statistics, which makes it a good measure to keep in mind when comparing results from our benchmarks to those found in other sources.
+
+Since the \gls{LUT} is the most basic and fundamental building block, we will use the \gls{LUT} utilization rate this as \emph{the} utilization rate for the entire device. This is a generalization out of necessity. It is also easier to manually calculate (or estimate) a boundary on number of \gls{DSP}s or \gls{RAM} blocks required, at least if the project specifications are known.
+
+Ideally we could calculate a number that quantifies the computational power an \gls{FPGA} has, much like ``floating point operations per second'' (\gls{FLOPS}) is often used for \gls{CPU}s. Such a number would have to be specialized to fit the project the \gls{FPGA} will be used in. For example if our design is an FIR filter, the data throughput would be a good single metric. Though an issue immediately arises: \gls{FPGA}s allow almost limitless pipelining increasing throughput, but this also increases latency, which might not be acceptable in the telecommunication industry.
+
+Generalizing this is not easy but if we would have to define a set of basic metrics a few examples could be:
+
+\begin{itemize}
+\tightlist
+\item
+  number of flip flop operations per second
+\item
+  number of \(N\)-bit wide multiplications per second
+\item
+  usable memory at a minimum access speed
+\end{itemize}
+
+All these metrics require knowing the maximum usable frequency at a given fill rate. So these two will be used as primary output results for our visualizations by creating a ``clock speed'' versus ``device fill rate'' graph for a number of variations on the input parameters.
+
+\hypertarget{conclusion-1}{%
+\section{Conclusion}\label{conclusion-1}}
+
+Our software must be automated to allow the easy generation of enough data to be useful, including automatically running the synthesis software and parsing its output data and creating a flexible and easy to use representation of that data.
+
+The benchmarked circuits must be selected with an eye on the eventual project where the \gls{FPGA} will be used, since otherwise the data will not be more relevant than data provided by the manufacturer. The circuits should not use \gls{IO} pins, and ideally stress the \gls{PAR} algorithms in the synthesis software by occupying enough of the routing fabric of the \gls{FPGA}.
+
+\hypertarget{sec:implementation}{%
+\chapter{Implementation}\label{sec:implementation}}
+
+In this chapter, we elaborate our custom software, and how it interacts with the vendor's software. Then, we clarify our test component choices for each of the vendors
+
+\hypertarget{sec:ImplementationOverview}{%
+\section{Overview}\label{sec:ImplementationOverview}}
+
+\begin{figure}
+\hypertarget{fig:implementation}{%
+\centering
+\includegraphics{assets/Implementation.pdf}
+\caption{The completed program structure with example tasks.}\label{fig:implementation}
+}
+\end{figure}
+
+Figure~\ref{fig:implementation} illustrates our custom program's architecture and describes an example case where an adder (``ADD'') and Dual Port RAM (``DP-RAM'') are benchmarked on a device from Xilinx (Kintex-7) with the Vivado software and a device from NanoXpore (NX-MEDIUM) with it's software nxPython. The adder has a variable bit width \(\alpha\). The Dual Port RAM has variable depth \(\beta\) and word width \(\gamma\).
+
+\hypertarget{fpgaperformancesuite-python-package}{%
+\section{FPGAPerformanceSuite Python Package}\label{fpgaperformancesuite-python-package}}
+
+Our main custom program is the \mintinline[]{text}{FPGAPerformanceSuite} Python package. We chose Python 3 for its ease of use and flexibility. Our programming environment of choice is PyCharm\footnote{\href{https://www.jetbrains.com/pycharm/}{\texttt{www.jetbrains.com/pycharm/}}} but the end user is free to chose a different programming environment. We follow recommended Python programming practices such as PEP 8\footnote{Style Guide for Python Code: \href{https://www.python.org/dev/peps/pep-0008}{\texttt{www.python.org/dev/peps/pep-0008}}}. We advice using a virtual environment, in accordance with PEP 405\footnote{Python Virtual Environments: \href{https://www.python.org/dev/peps/pep-0405}{\texttt{www.python.org/dev/peps/pep-0405}}}. The module can be run like any other Python module, by running \mintinline[]{text}{python -m FPGAPerformanceSuite} from the command line. The source code for this package is included in appendix \ref{sec:pythonpackage}
+
+The package defines the vendor classes for Vivado and NanoXplore and several helper functions that are used to automate the process of defining the set of benchmarks to run. To keep everything flexible and customizable, all the configuration is done in Python. There are two options for defining a benchmark set: editing the \mintinline[]{text}{FPGAPerformanceSuite} package entry point (\mintinline[]{text}{__main__.py}) and using its infrastructure; or importing \mintinline[]{text}{FPGAPerformanceSuite} in a custom script, defining benchmarks and calling the \mintinline[]{text}{FPGAPerformanceSuite.run} function. The first option is the easiest because several helper functions are already defined, including a main function with argument parsing that supports setting the various options.
+
+\hypertarget{task-definitions}{%
+\subsection{Task Definitions}\label{task-definitions}}
+
+Every benchmark task is the combination of a specific vendor and a set of input parameters. The input parameters needed can differ per vendor. Every task will start a new instance of the vendor software, it will instruct the software to run with the set of input parameters and collect the results when it is finished.
+
+The code snippet below is an example of what a task set definition looks like. This definition will result in a set of 6 tasks, all using the same file but with a different generic parameter \(N\). This is equivalent to the fist benchmark in figure~\ref{fig:implementation}, where \(\alpha\) is filled in with the values 8, 16, 32, 64, 128, and 256.
+
+\begin{minted}[]{python}
+# Define a runner for Vivado, that uses the shared thread pool
+@runner(Vivado, single_thread=False)
+def vivado_add_runner():
+    part = 'xc7k410tfbg900-1'  # The Vivado part number
+    files = ['../vhdl/add.vhd']  # The VHDL files required
+    for n in (8, 16, 32, 64, 128, 256):  # Input parameter N
+        name = 'add%d' % n  # Create a unique name
+        yield dict(name=name, part=part, files=files, generics={'N': n})
+\end{minted}
+
+Every function with the \mintinline[]{text}{@runner} decorator is called a runner. Runners are automatically detected by the function \mintinline[]{text}{FPGAPerformanceSuite.run}. The decorator requires a reference to the vendor class. A single runner cannot define tasks for multiple vendors.
+
+Runners are normal Python generators, this means that the \mintinline[]{text}{yield} keyword is used to return multiple sets of input parameters from a single function. It also makes them very powerful, since they can contain any arbitrary Python code. More complex examples of runner definitions are included in appendix \ref{sec:RunnerExamples}.
+
+The generator must be finite due to a limitation of our current implementation. All of the inputs are computed before the worker threads start. So if the generator were infinite, the program would eventually run out of memory and (hopefully) get killed by the operating system.
+
+\hypertarget{parallelism}{%
+\subsection{Parallelism}\label{parallelism}}
+
+To optimize for runtime the program will be multi-threaded\footnote{Technically we don't use multi-threading but multi-processing. This is an important distinction in Python, but it is outside the scope of this thesis. The end result is the same: multiple tasks can be run at the same time.} so more than one benchmark can be run at the same time. This is important because they can take quite a long time (more than an hour) per set of input parameters.
+
+A runner can optionally set the parameter \mintinline[]{text}{single_thread} to indicate that the vendor software cannot be run in multi-threaded mode. This option was included because of license limitations in NanoXplore's software. Only one instance of the program can be run at the same time. Vivado only allows many parallel instances on the same computer with a single license.
+
+The main thread (``FPGA Performance Suite'' in figure~\ref{fig:implementation}) will set up a batch of all of the benchmark tasks that need to run based on the user's input. It will then dispense them to worker threads when they become available. This would in principle allow the benchmarks to be run on other host machines or computation clusters, but this is not implemented here. After a worker is finished with a task, it will pass back the results. The main thread then saves them and can create or update a visualization.
+
+\hypertarget{sec:vivado}{%
+\section{Vivado}\label{sec:vivado}}
+
+Our first vendor software is Xilinx's Vivado. We chose to start with Xilinx because it is one of the biggest \gls{FPGA} vendors, with a market share of \textasciitilde50\%\footnote{According to \href{http://hardwarebee.com/list-fpga-companies/}{\texttt{hardwarebee.com/list-fpga-companies/}}}. We opted for Vivado instead of \gls{Xilinx ISE} because the latter has been deprecated since 2013\footnote{\href{https://www.xilinx.com/support/download.html}{\texttt{www.xilinx.com/support/download.html}}}. We use the HLx edition version 2017.1.
+
+Vivado can be used as a \gls{GUI} program or via \gls{TCL}\footnote{Scripting language. Pronounced ``tickle'', more information on the website: \href{https://www.tcl-lang.org/}{\texttt{www.tcl-lang.org/}}} in scripted or interpreted mode. The \gls{TCL} batch mode makes it easier to setup automation, so that is what we used. We will be using the non-project design flow. It is easier to use with the \gls{TCL} automation, but since the project files are not stored to disk, the project cannot be opened in the \gls{GUI} version of the program.
+
+Vivado's way to prevent signals from being optimized away is setting the \mintinline[]{text}{dont_touch} attribute on them. This is done in all benchmarks that don't use IO pins on their input and output registers. To prevent warnings about undriven inputs, the input can be looped back to itself with an inverter. This also prevents possible ``always zero'' optimizations further in the design.
+
+\hypertarget{finding-the-maximal-frequency-in-vivado}{%
+\subsection{Finding the Maximal Frequency in Vivado}\label{finding-the-maximal-frequency-in-vivado}}
+
+The Vivado \gls{PAR} process is constraint driven, it cannot operate without setting a target clock frequency. Because of this, benchmarking a design is not as simple as running synthesis and \gls{PAR} once. After synthesis, a clock constraint must be added that is strict enough so the \gls{PAR} process will attempt to optimize the layout, like it would in a real design. The goal is to find the maximum frequency after all.
+
+If the clock frequency is too strict, the \gls{PAR} process will fail and produce a path with negative slack. The negative slack is a good indication of how much extra time is required on the clock period to get \gls{PAR} to succeed. However it is not the definitive answer because given a different set of constraints, \gls{PAR} will make different decisions and produce a (usually) better result.
+
+This trade-off is inherent to the job of the \gls{PAR} algorithm. If a lower clock speed is required, it must pack the logic close together, but heavily packed logic runs the risk of running out of routing resources. This is a complex optimization problem with a different, proprietary, solution from every manufacturer.
+
+The obvious downside of this approach is that it requires multiple passes and thus is slow. We feel this approach is justified against the potentially high error that would go unnoticed by running once and then taking the slack as truth.
+
+To get the best result, the slack is subtracted from the previously used period. This new value is used as the period for a new \gls{PAR} run. This iterative loop can be repeated until the slack is zero or within an acceptable margin of error. Sometimes the algorithms will not reach this margin, but start oscillating instead. An example in table~\ref{tbl:oscillation}.
+
+\hypertarget{tbl:oscillation}{}
+\begin{longtable}[]{@{}rrr@{}}
+\caption{\label{tbl:oscillation}Example of an oscillating result.}\tabularnewline
+\toprule
+Run & Period & Slack\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Run & Period & Slack\tabularnewline
+\midrule
+\endhead
+1 & 1 ns & -10 ns\tabularnewline
+2 & 11 ns & 2 ns\tabularnewline
+3 & 9 ns & -2 ns\tabularnewline
+4 & 11 ns & 2 ns\tabularnewline
+5 & 9 ns & -2 ns\tabularnewline
+6 & 11 ns & 2 ns\tabularnewline
+\bottomrule
+\end{longtable}
+
+Vivado's algorithms are deterministic. This means that any oscillating run can be terminated, since it will not produce productive output. The best course of action in this case seems to mark the results as an oscillation and either dismiss the result or use the worst case maximum frequency. We chose to use the worse case frequency in our implementation.
+
+This entire process is done inside a single Vivado batch run, by using a complex custom \gls{TCL} script that does the iterative loop until it either reaches a result within a given margin of error, produces an error, runs out of iterations or detects an oscillation.
+
+The source code of the script is included in appendix \ref{sec:vivadofmax}. The default values for the parameters have been chosen based on experimentation. A starting period of 1ns, an error tolerance of 5\% and an iteration limit of 10 were chosen because they produce good results. The iteration limit is almost never reached, thanks to the error tolerance and oscillation detection.
+
+\hypertarget{report-output}{%
+\subsection{Report Output}\label{report-output}}
+
+Our \gls{TCL} script instructs Vivado to output reports once it is finished. Those reports contain all of the output data we need. The reports are text files with ASCII tables such as these:
+
+\begin{minted}[linenos=no]{text}
++----------------------------+-------+-------+-----------+-------+
+|          Site Type         |  Used | Fixed | Available | Util% |
++----------------------------+-------+-------+-----------+-------+
+| Slice LUTs                 | 14254 |     0 |    254200 |  5.61 |
+|   LUT as Logic             | 14189 |     0 |    254200 |  5.58 |
+|   LUT as Memory            |    65 |     0 |     90600 |  0.07 |
+|     LUT as Distributed RAM |     0 |     0 |           |       |
+|     LUT as Shift Register  |    65 |     0 |           |       |
+| Slice Registers            | 20750 |     0 |    508400 |  4.08 |
+|   Register as Flip Flop    | 20750 |     0 |    508400 |  4.08 |
+|   Register as Latch        |     0 |     0 |    508400 |  0.00 |
+| F7 Muxes                   |     0 |     0 |    127100 |  0.00 |
+| F8 Muxes                   |     0 |     0 |     63550 |  0.00 |
++----------------------------+-------+-------+-----------+-------+
+\end{minted}
+
+Our Python module parses the tables and processes the data into a uniform format. The reports also contain information that is not used by the program, but that can be viewed later if the benchmark results do not conform with expectations. The hierarchical utilization report is particularly useful because it shows the resource utilization for every part of a synthesized design. An example and source for the table above is included in appendix \ref{sec:utilization_h}.
+
+\hypertarget{xilinx-kintex-7}{%
+\subsection{Xilinx Kintex-7}\label{xilinx-kintex-7}}
+
+Although no actual hardware is required to run these benchmarks, we must choose a part number for Vivado to target. We chose the Kintex-7 \mintinline[]{text}{XC7K410T} at the request of Antwerp Space. This is considered our primary target, and was used for most of the development. This is a short summary of the specifications of this device: \citep{kintex7}
+
+\begin{itemize}
+\tightlist
+\item
+  28nm \gls{HKMG} process technology by \gls{TSMC}
+\item
+  Xilinx part number: \mintinline[]{text}{XC7K410T}
+\item
+  Vivado part number: \mintinline[]{text}{xc7k410tfbg900-1}
+\item
+  Speed grade -1
+\item
+  1 540 \gls{DSP} blocks
+\item
+  254 200 \gls{LUT}s (6 input)
+\item
+  508 400 registers
+\item
+  28 620 KBit Block \gls{RAM}
+\end{itemize}
+
+\hypertarget{sec:nanoxplore}{%
+\section{NanoXplore}\label{sec:nanoxplore}}
+
+NanoXplore is a relatively new French manufacturer (formed in 2010). It is also a fabless\footnote{Fabless means that the design is done in-house, but the fabrication of the devices is outsourced.} company. Their effort is supported through European funding with the express purpose of being independent from the \gls{USA}. They develop embedded FPGA cores and ``radiation hardened by design'' \gls{FPGA}s for the space industry. Their focus on space grade hardware is why they are of particular interest to Antwerp Space, and why we chose them as our second manufacturer.
+
+Unfortunately their software is still in a pre-release state and is sometimes unstable. This came to light very late in the process of creating the test results for this thesis. The early tests ran fine, and we output data for them, but the fully integrated test (FIR Filter With Filler) could not be completed. We think this is because of limitations with their \gls{VHDL} synthesizer, but the software does not output any useful error messages, so it is hard to tell.
+
+Another unfortunate observation is that the licensing model for the NanoXplore software does not allow multiple instances of the software to be run at the same on the same host. Vivado takes a single license for an entire host, meaning that it can be started multiple times in parallel. This is not the case of NanoXplore, limiting its benchmarking speed significantly.
+
+Most datasheets of NanoXplore parts and documentation of the software are confidential. All information in this thesis is from a publicly available presentation \citep{nanoxplore}.
+
+\hypertarget{nxpython-run-script}{%
+\subsection{NxPython Run Script}\label{nxpython-run-script}}
+
+The NanoXplore software for synthesis, placing, and routing is based on a special Python environment called ``nxpython''. Unfortunately this is based on Python 2.5 and requires specially compiled modules that cannot be loaded in a newer version of Python. This meant it was easier to just start up a new process with the correct environment and load a small custom script with the input parameters passed via command arguments. This ended up being very similar to how Vivado is launched.
+
+One big difference from Vivado is that the \gls{PAR} algorithm is not driven by timing constraints. The software can be run without a clock speed given and will output the maximal frequency the design can be run at reliably. This makes the run script a lot less complex. The source code is included in appendix \ref{sec:runnx}.
+
+The output format is similar to that of Vivado, it is also parsed and transformed into the same uniform format. This software provides less output data and does not have a similar hierarchical utilization output.
+
+\hypertarget{nx-medium}{%
+\subsection{NX-MEDIUM}\label{nx-medium}}
+
+NanoXplore only has one part that is currently fully supported, called ``NX-MEDIUM''. Compared to the Kintex-7 it has far fewer resources. Here is a short summary: \citep{nanoxplore}
+
+\begin{itemize}
+\tightlist
+\item
+  65nm C65-SPACE process technology by STMicroelectronics
+\item
+  112 \gls{DSP} blocks
+\item
+  34 272 \gls{LUT}s (4 input)
+\item
+  32 256 registers
+\item
+  2 688 KBit Block \gls{RAM}
+\end{itemize}
+
+\hypertarget{conclusion-2}{%
+\section{Conclusion}\label{conclusion-2}}
+
+In this chapter we discussed the implementation details of our benchmark methodology. Our system nearly automates the entire process of generating and running the different benchmarks. Due to the flexibility of our system it should be easy for anyone with knowledge of Python to extend our module and add any vendor toolchain. For the end user very limited knowledge of Python is required to add custom benchmark sets.
+
+Vivado was a good choice for the initial implementation. NanoXplore proved to be a difficult vendor to work with because of the pre-release state of their software, limited documentation, and almost non-existent error feedback. Hopefully this improves in the future.
+
+\hypertarget{sec:benchmarks}{%
+\chapter{Benchmarks}\label{sec:benchmarks}}
+
+In this chapter we present example benchmarks and our solution for occupying the routing fabric. Most of these benchmarks where used to generate test results presented in the next chapter.
+
+\hypertarget{naive-mathematical-operations}{%
+\section{Naive Mathematical Operations}\label{naive-mathematical-operations}}
+
+For our initial testing phase, we used simple mathematical operations with a variable bit width input. To limit complexity, we used the same width input \(N\) for both operands for most operations.
+
+We tried all these mathematical operations, natively supported by \gls{VHDL}, with both signed and unsigned numbers:
+
+\begin{itemize}
+\tightlist
+\item
+  Add and subtract (\(N \times N \mapsto N\))
+\item
+  Multiply (\(N \times N \mapsto 2N\))
+\item
+  Divide and remainder (and modulus) (\(N \times N \mapsto N\))
+\item
+  Greater or less than with ``or equal'' variants, equal and not equal (\(N \times N \mapsto 1\))
+\item
+  Shift and rotate, left and right. (\(N \times log_2N \mapsto N\))
+\end{itemize}
+
+From our initial test runs we learned that only the following operations make sense to run, because the output data from the others is identical\footnote{This is logical given how the operations are implemented in hardware, but this is beyond the scope of this thesis.}:
+
+\begin{itemize}
+\tightlist
+\item
+  Add and subtract
+\item
+  Multiply (implemented with \gls{DSP} slices automatically)
+\item
+  Divide
+\item
+  Greater than and equal
+\item
+  Shift left and right and one rotate (we chose left).
+\item
+  Signed vs unsigned makes only a very small difference.
+\end{itemize}
+
+No extra directives where added. We ran this test with a very large range for \(N\) for the Kintex-7 to test our initial implementation. The actual test results are not of much use due to their limited relevance to real world applications. Out of curiosity we did run simple adder for both the Kintex-7 and NX-MEDIUM with a more limited range for \(N\).
+
+\hypertarget{fir-filter}{%
+\section{FIR Filter}\label{fir-filter}}
+
+For a more realistic example, we chose an FIR filter provided by Antwerp Space. It is a pipelined symmetrical design created by \citet{rondelez}. The design is entirely parametrized via generics, and can thus be used with a wide range of input parameters. The exact implementation is not important for our use, we regard it as a black box.
+
+For our benchmarks of the Kintex-7 part, we chose to fix the parameters at 129 taps and 16 bits of data and coefficients. This is an arbitrary choice, but we wanted to make the design large enough to get more varied data without having to instantiate the design many times. These parameters result in 2.3\% \gls{LUT} utilization, and uses 65 \gls{DSP} blocks. Even without knowing the inner workings of the FIR filter, 65 \gls{DSP}s would make sense for a symmetrical filter.
+
+\hypertarget{sec:iscas89}{%
+\section{ISCAS'89}\label{sec:iscas89}}
+
+The ISCAS'89 benchmark set, as described in \citet{iscas89}, contains 31 circuits. The source code of the benchmarks can be found online\footnote{Originally available at \href{http://www.cbl.ncsu.edu/benchmarks}{\texttt{www.cbl.ncsu.edu/benchmarks}} but this site now links to an empty directory. We used this archived version: \href{http://www.pld.ttu.ee/~maksim/benchmarks/}{\texttt{www.pld.ttu.ee/\textasciitilde{}maksim/benchmarks/}}.}. Table~\ref{tbl:iscascircuits} gives an overview of the files we used. The complexity increases the further down the table. The number in the name represents the number of interconnect lines among the gates. Some benchmarks have multiple versions (a letter is added to the name). For more information we refer to the source material.
+
+The ISCAS'89 files are provided in a \mintinline[]{text}{.bench} file format. We did not find specifications on this file format and it cannot be synthesized by Vivado or NanoXplore's software. We analyzed the format and wrote a conversion script to create \gls{VHDL} file from them. It can handle almost all of the cases. The source for this script is provided in appendix \ref{sec:bench2vhdl}, along with an example input and output. The entire set of files, including \gls{VHDL} version, is included in the digital appendix.
+
+This set will be primarily used as background filler for the FIR Filter With Filler test from the next section. It is also used on it's own as a simple testing case.
+
+\hypertarget{tbl:iscascircuits}{}
+\begin{longtable}[]{@{}rrrrrrrrrr@{}}
+\caption{\label{tbl:iscascircuits}The internal structure of the ISCAS benchmarks. Every column is the count of that pin or gate type. A DFF is a D-flip-flop}\tabularnewline
+\toprule
+Name & Inputs & Outputs & Gates & DFFs & NOTs & ANDs & NANDs & ORs & NORs\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Name & Inputs & Outputs & Gates & DFFs & NOTs & ANDs & NANDs & ORs & NORs\tabularnewline
+\midrule
+\endhead
+s27 & 5 & 1 & 13 & 3 & 2 & 1 & 1 & 2 & 4\tabularnewline
+s27a & 5 & 1 & 13 & 3 & 2 & 1 & 1 & 2 & 4\tabularnewline
+s208 & 12 & 2 & 104 & 8 & 35 & 17 & 19 & 4 & 21\tabularnewline
+s298 & 4 & 6 & 133 & 14 & 44 & 31 & 9 & 16 & 19\tabularnewline
+s344 & 10 & 11 & 175 & 15 & 59 & 44 & 18 & 9 & 30\tabularnewline
+s349 & 10 & 11 & 176 & 15 & 57 & 44 & 19 & 10 & 31\tabularnewline
+s382 & 4 & 6 & 179 & 21 & 59 & 11 & 30 & 24 & 34\tabularnewline
+s386 & 8 & 7 & 165 & 6 & 41 & 83 & 0 & 35 & 0\tabularnewline
+s386a & 8 & 7 & 165 & 6 & 41 & 83 & 0 & 35 & 0\tabularnewline
+s400 & 4 & 6 & 183 & 21 & 56 & 11 & 36 & 25 & 34\tabularnewline
+s420 & 20 & 2 & 212 & 16 & 74 & 28 & 46 & 9 & 39\tabularnewline
+s444 & 4 & 6 & 202 & 21 & 62 & 13 & 58 & 14 & 34\tabularnewline
+s510 & 20 & 7 & 217 & 6 & 32 & 34 & 61 & 29 & 55\tabularnewline
+s526 & 4 & 6 & 214 & 21 & 52 & 56 & 22 & 28 & 35\tabularnewline
+s526a & 4 & 6 & 215 & 21 & 54 & 55 & 22 & 28 & 35\tabularnewline
+s641 & 36 & 24 & 398 & 19 & 272 & 90 & 4 & 13 & 0\tabularnewline
+s713 & 36 & 23 & 412 & 19 & 254 & 94 & 28 & 17 & 0\tabularnewline
+s820 & 19 & 19 & 294 & 5 & 33 & 76 & 54 & 60 & 66\tabularnewline
+s832 & 19 & 19 & 292 & 5 & 25 & 78 & 54 & 64 & 66\tabularnewline
+s838 & 36 & 2 & 422 & 32 & 149 & 58 & 89 & 16 & 78\tabularnewline
+s953 & 17 & 23 & 424 & 29 & 84 & 49 & 114 & 36 & 112\tabularnewline
+s1196 & 15 & 14 & 547 & 18 & 141 & 118 & 119 & 101 & 50\tabularnewline
+s1196a & 15 & 14 & 547 & 18 & 141 & 118 & 119 & 101 & 50\tabularnewline
+s1196b & 15 & 14 & 547 & 18 & 141 & 118 & 119 & 101 & 50\tabularnewline
+s1238 & 15 & 14 & 526 & 18 & 80 & 134 & 125 & 112 & 57\tabularnewline
+s1238a & 15 & 14 & 526 & 18 & 80 & 134 & 125 & 112 & 57\tabularnewline
+s1423 & 18 & 5 & 731 & 74 & 167 & 197 & 64 & 137 & 92\tabularnewline
+s1488 & 9 & 19 & 659 & 6 & 103 & 350 & 0 & 200 & 0\tabularnewline
+s1494 & 9 & 19 & 653 & 6 & 89 & 354 & 0 & 204 & 0\tabularnewline
+s5378 & 36 & 49 & 2958 & 179 & 1775 & 0 & 0 & 239 & 765\tabularnewline
+s9234 & 37 & 39 & 5808 & 211 & 3570 & 955 & 528 & 431 & 113\tabularnewline
+s13207 & 63 & 152 & 8589 & 638 & 5378 & 1114 & 849 & 512 & 98\tabularnewline
+s15850 & 78 & 150 & 10306 & 534 & 6324 & 1619 & 968 & 710 & 151\tabularnewline
+s35932 & 36 & 320 & 17793 & 1728 & 3861 & 4032 & 7020 & 1152 & 0\tabularnewline
+s38417 & 29 & 106 & 23815 & 1636 & 13470 & 4154 & 2050 & 226 & 2279\tabularnewline
+s38584 & 39 & 304 & 20679 & 1426 & 7805 & 5516 & 2126 & 2621 & 1185\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{sec:topmodule}{%
+\section{FIR Filter With Filler}\label{sec:topmodule}}
+
+As described in section~\ref{sec:routing} we need a way to make sure the synthesis software cannot segregate the design into multiple sections without any interconnecting signals if we want to use a filler pattern to occupy some of the routing network. To do this we created a custom \gls{VHDL} top module. The full code is included in appendix \ref{sec:AppendixTop}.
+
+The different sub-sections of the design (called circuit A and B) are combined by linking their inputs and outputs to a large data chain. By convention circuit A is the actual design we want to benchmark, circuit B is the filler pattern. The clock drives the data in the chain forwards. In between every segment, the data is shifted over by 1 signal (bit) to avoid segregation. At the end of the chain all of the signals are inverted. This avoids the possibility that the synthesis software will conclude that parts of the circuit are always zero. The chain sections of the top file are also marked to prevent removal by the software.
+
+\begin{figure}
+\hypertarget{fig:topmodule}{%
+\centering
+\includegraphics{assets/TopModuleDiagram.pdf}
+\caption{The top module in diagram form.}\label{fig:topmodule}
+}
+\end{figure}
+
+The way this module works is illustrated by figure~\ref{fig:topmodule}. In this diagram, circuit A has 6 inputs and 3 outputs, B has 4 inputs and 1 output. This means that circuit B can be placed twice in a single segment if the bus width is set to 8. Circuit A then needs 2 bypass signals. Since in both circuits the number of inputs does not match the number of outputs, some inputs are also wired to the output, effectively bypassing the circuits. The number of instances for circuit A and B are passed into the module via a generic, meaning this can be set in the Python code.
+
+This code is not fully generic because of the limitations of the language. It is made to be as generic as possible with only 3 sections requiring manual edits before it can be used with a custom benchmark and background filler. The component definitions for circuit A and B have to be filled in and the instantiation (linking of the chain data signals to the A and B circuit) have to be defined by hand. Everything else (including the bypass signals) is fully automatic.
+
+The overhead from this top module is limited. We know this thanks to the hierarchical utilization report from Vivado. It mainly consists of flip flops and a few \gls{LUT}s. For the smallest version we tested (with a single the FIR filter and 10 instances of the ISCAS \mintinline[]{text}{s832} filler) it uses only 22 \gls{LUT}s and 1037 flip-flops. For one of the largest (24 \(\times\) FIR and 360 \(\times\) \mintinline[]{text}{s832}) it uses 91 \gls{LUT}s and 8808 flip-flops.
+
+\hypertarget{conclusion-3}{%
+\section{Conclusion}\label{conclusion-3}}
+
+This set of benchmarks is a good starting point, but as mentioned before, it is not meant to be an authoritative set. The end user is expected to create their own benchmarks that are based on whatever project the \gls{FPGA} is expected to used in.
+
+Our custom solution for adding load on the routing fabric is unfortunately not completely generic, but it should be easy to use for anyone with knowledge of \gls{VHDL}. We will be using it for our largest benchmark set.
+
+\hypertarget{sec:results}{%
+\chapter{Results}\label{sec:results}}
+
+In this chapter we present all results, remarks, and conclusions from the benchmarks we ran.
+
+\hypertarget{naive-mathematical-operations-1}{%
+\section{Naive Mathematical Operations}\label{naive-mathematical-operations-1}}
+
+This data set is the first one we created. There is no \gls{LUT} utilization data. It was computationally expensive to create (it took 2 weeks of CPU power on a 10 core server) and the results are of limited value. Because of this we did not re-run it with our more up-to-date software or for the NG-MEDIUM. The entire dataset is too large to include here, it is included digitally.
+
+\hypertarget{mathematical-operator-results-with-kintex-7}{%
+\subsection{Mathematical Operator Results With Kintex-7}\label{mathematical-operator-results-with-kintex-7}}
+
+As stated above this data was only generated for the Kintex-7. Some data series have almost the same output, for example all signed and unsigned versions of the same operation. To make the graph readable they have been removed from figure~\ref{fig:maths}.
+
+\begin{figure}
+\hypertarget{fig:maths}{%
+\centering
+\includegraphics{assets/WorkInProgress_Graph1.png}
+\caption{The results of a number of basic mathematical operations on the Kintex-7.}\label{fig:maths}
+}
+\end{figure}
+
+\hypertarget{adder-results-with-ng-medium}{%
+\subsection{Adder Results With NG-MEDIUM}\label{adder-results-with-ng-medium}}
+
+While developing our implementation for NanoXplore, we did run a much shorter dataset with only an 8, 16, 32, 64, 128, and 256 bit adder. The data only includes the maximum clock speed because the LUT utilization is so low it does not provide any useful information. Results in figure~\ref{fig:add} and table~\ref{tbl:add}.
+
+We did not expect the NG-MEDIUM to overtake the Kintex-7, and are also surprised that the NG-MEDIUM has a relatively flat curve for the first four results. The Kintex-7's curve does conform to the shape we where expecting: gradually sloping downwards, with the maximal clock roughly halving per doubling of the input size. This is what could be expected from an optimized, but not pipelined, adder design in hardware.
+
+\hypertarget{tbl:add}{}
+\begin{longtable}[]{@{}lrr@{}}
+\caption{\label{tbl:add}The results for the simple adder benchmarks.}\tabularnewline
+\toprule
+Name & Kintex-7 F\textsubscript{Max} {[}MHz{]} & NG-MEDIUM F\textsubscript{Max} {[}MHz{]}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+Name & Kintex-7 F\textsubscript{Max} {[}MHz{]} & NG-MEDIUM F\textsubscript{Max} {[}MHz{]}\tabularnewline
+\midrule
+\endhead
+add8 & 737.4631 & 590.6670\tabularnewline
+add16 & 738.0074 & 585.4800\tabularnewline
+add32 & 626.9592 & 554.6310\tabularnewline
+add64 & 480.7692 & 542.8880\tabularnewline
+add128 & 326.0515 & 304.7850\tabularnewline
+add256 & 194.9318 & 313.2830\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{figure}
+\hypertarget{fig:add}{%
+\centering
+\includegraphics{assets/add.pdf}
+\caption{The results for the simple adder benchmarks.}\label{fig:add}
+}
+\end{figure}
+
+\clearpage
+
+\hypertarget{iscas89}{%
+\section{ISCAS'89}\label{iscas89}}
+
+Table~\ref{tbl:iscas} and figure~\ref{fig:iscas} show the output data of the ISCAS benchmarks. The order of the table and graphs is the same. With this data we can select a pattern to use as background filler for the ``FIR Filter With Filler'' benchmark set. We chose \mintinline[]{text}{s832} (row highlighted in orange) because it still performs above 240MHz (the maximum speed of the FIR filter) and because its \gls{LUT} utilization rate is 0.1\%. This makes it easy to use multiples of 10 and get a good approximations of what the total \gls{LUT} utilization rate would be.
+
+The two lines highlighted in yellow \mintinline[]{text}{s641} and \mintinline[]{text}{s713} are twice as fast on the NG-MEDIUM as the Kintex-7. This is very surprising given the NG-MEDIUM's inherent disadvantage due to the difference in the technology node. Dennard's scaling law roughly predicts a 2x advantage for the Kintex-7.
+
+We speculate that, given that the ISCAS benchmarks all consist of single or dual input gates, it is possible that the design can be placed more efficiently on the NG-MEDIUM with it's 4 inputs \gls{LUT}s versue the Kintex-7 with it's 6 input \gls{LUT}s. We think that this means that, when optimizing for speed, the synthesis tool will place more gates in a single \gls{LUT}. This would mean that the ``output'' in between some of those packed gates cannot be used to feed another \gls{LUT}, so those gates will end up in more than one \gls{LUT}.
+
+The results for the NG-MEDIUM from \mintinline[]{text}{s5378} onwards (except \mintinline[]{text}{s35932}) are bizarre, because they seem to be missing some flip-flops if we compare the numbers found in the output data with the ISCAS'89 specifications from table~\ref{tbl:iscascircuits}. We don't know where this discrepancy comes from. Analyzing the logged output information from our run script offered no explanation.
+
+Generating this entire dataset takes about 20 minutes on a modern 20 core server.
+
+\clearpage
+\hypertarget{tbl:iscas}{}
+\begin{longtable}[]{l|rrrr|rrrr}
+\caption{\label{tbl:iscas}The results of the ISCAS benchmarks.}\tabularnewline
+\toprule
+ & \multicolumn{4}{c|}{Kintex-7} & \multicolumn{4}{c}{NG-MEDIUM} \tabularnewline
+ Name & F~Max~ [MHz] & LUTs & FFs & LUT \% & F~Max~ [MHz] & LUTs & FFs & LUT \%\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+ & \multicolumn{4}{c|}{Kintex-7} & \multicolumn{4}{c}{NG-MEDIUM} \tabularnewline
+ Name & F~Max~ [MHz] & LUTs & FFs & LUT & F~Max~ [MHz] & LUTs & FFs & LUT\tabularnewline
+\midrule
+\endhead
+ s27    & 564.6527 &     9 &    3 & 0.0035 & 362.8450 &    5 &    3 & 0.0146 \\
+ s27a   & 564.6527 &     9 &    3 & 0.0035 & 362.8450 &    5 &    3 & 0.0146 \\
+ s208   & 320.5128 &    81 &    8 & 0.0319 & 255.4280 &   23 &    8 & 0.0671 \\
+ s298   & 325.6268 &   109 &   14 & 0.0429 & 254.7120 &   28 &   14 & 0.0817 \\
+ s344   & 193.3488 &   146 &   15 & 0.0574 & 197.5110 &   43 &   15 & 0.1255 \\
+ s349   & 196.7342 &   144 &   15 & 0.0566 & 197.5110 &   43 &   15 & 0.1255 \\
+ s382   & 314.6633 &   146 &   21 & 0.0574 & 194.8180 &   45 &   21 & 0.1313 \\
+ s386   & 281.9284 &   152 &    6 & 0.0598 & 254.1940 &   39 &    6 & 0.1138 \\
+ s386a  & 281.9284 &   152 &    6 & 0.0598 & 254.1940 &   39 &    6 & 0.1138 \\
+ s400   & 342.1143 &   154 &   21 & 0.0606 & 204.4990 &   45 &   21 & 0.1313 \\
+ s420   & 289.1845 &   180 &   16 & 0.0708 & 248.8800 &   44 &   16 & 0.1284 \\
+ s444   & 289.6032 &   169 &   21 & 0.0665 & 201.8980 &   46 &   21 & 0.1342 \\
+ s510   & 279.4077 &   187 &    6 & 0.0736 & 195.1600 &   81 &    6 & 0.2363 \\
+ s526   & 329.3808 &   178 &   21 & 0.0700 & 201.1670 &   40 &   21 & 0.1167 \\
+ s526a  & 345.5425 &   178 &   21 & 0.0700 & 201.1670 &   40 &   21 & 0.1167 \\
+ \rowcolor{Goldenrod}
+ s641   &  52.9577 &   334 &   19 & 0.1314 & 111.0250 &   67 &   19 & 0.1955 \\
+ \rowcolor{Goldenrod}
+ s713   &  54.1126 &   355 &   19 & 0.1397 & 111.7190 &   67 &   19 & 0.1955 \\
+ s820   & 300.0300 &   272 &    5 & 0.1070 & 165.6730 &   87 &    5 & 0.2539 \\
+ \rowcolor{Apricot}
+ s832   & 287.5216 &   269 &    5 & 0.1058 & 163.6930 &   87 &    5 & 0.2539 \\
+ s838   & 282.7255 &   322 &   32 & 0.1267 & 253.7430 &   86 &   32 & 0.2509 \\
+ s953   & 178.4758 &   298 &   29 & 0.1172 & 166.6110 &  134 &   29 & 0.3910 \\
+ s1196  & 236.6864 &   440 &   18 & 0.1731 & 126.3260 &  149 &   18 & 0.4348 \\
+ s1196a & 236.6864 &   440 &   18 & 0.1731 & 126.3260 &  149 &   18 & 0.4348 \\
+ s1196b & 236.6864 &   440 &   18 & 0.1731 & 126.3260 &  149 &   18 & 0.4348 \\
+ s1238  & 237.3042 &   379 &   18 & 0.1491 & 141.4030 &  157 &   18 & 0.4581 \\
+ s1238a & 237.3042 &   379 &   18 & 0.1491 & 141.4030 &  157 &   18 & 0.4581 \\
+ s1423  &  59.5203 &   538 &   74 & 0.2116 &  54.0570 &  169 &   74 & 0.4931 \\
+ s1488  & 178.6033 &   543 &    6 & 0.2136 & 162.8660 &  191 &    6 & 0.5573 \\
+ s1494  & 184.3998 &   526 &    6 & 0.2069 & 158.7050 &  194 &    6 & 0.5661 \\
+ s5378  & 126.1511 &  2199 &  179 & 0.8651 & 101.0100 &  405 &  161 & 1.1817 \\
+ s9234  &  50.1655 &  4256 &  211 & 1.6743 &  78.4810 &  276 &  133 & 0.8053 \\
+ s13207 &  50.4414 &  5807 &  638 & 2.2844 &  67.0380 &  586 &  475 & 1.7099 \\
+ s15850 &  46.8121 &  6915 &  534 & 2.7203 &  47.5870 &  866 &  457 & 2.5268 \\
+ s35932 &  70.1066 & 12265 & 1728 & 4.8249 & 141.2430 & 2626 & 1728 & 7.6622 \\
+ s38417 &  65.6642 & 14698 & 1636 & 5.7821 &  54.5200 & 2726 & 1538 & 7.9540 \\
+ s38584 &  55.8534 & 13086 & 1426 & 5.1479 &  68.5260 & 3362 & 1384 & 9.8098 \\
+\bottomrule
+\end{longtable}
+
+\begin{figure}
+\hypertarget{fig:iscas}{%
+\centering
+\includegraphics{assets/iscas.pdf}
+\caption{The results for the ISCAS benchmarks.}\label{fig:iscas}
+}
+\end{figure}
+
+\clearpage
+
+\hypertarget{fir-filter-with-filler}{%
+\section{FIR Filter With Filler}\label{fir-filter-with-filler}}
+
+The results below are all for the Kintex-7. The entire dataset is too large to include here, it is included digitally. Unfortunately we could not complete this benchmark set for the NG-MEDIUM due to the instability of the synthesis software. Due to the timing of when we ran the tests we did not have time to try more configurations.
+
+Figure~\ref{fig:fir} shows a ``clock speed'' versus ``device fill rate'' graph. This one graph could be considered the summary of the benchmark data. These are our observations from this graph:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  There is a region where the routing resources are not limiting the performances (below 50\% of utilization). The independent FIR filters consistently hit the 220 MHz region. This performance is reachable for limited parts of a design, with the right design attention.
+\item
+  As the primary design has to make room for the filler, a second performance plateau is gradually reached at around 170 MHz and 80\% utilization rate. These two plateaus, if proven sufficiently invariant, could make their way into a component database as assumptions for early performance estimations. The second point would be the default performance statistic for this device.
+\end{enumerate}
+
+The usage limit was set to 90\%, so no attempts were made to synthesize a combination of parameters if its utilization exceeded that. Generating this entire dataset takes a few days on a modern 20 core server. This is mostly due to that usage limit. The time it takes for one data point increases dramatically with fill rate. Appendix \ref{sec:firextragraphs} has some graphs on that show in more detail which data points were generated.
+
+\begin{figure}
+\hypertarget{fig:fir}{%
+\centering
+\includegraphics{assets/fir.pdf}
+\caption{The results for the FIR With Filler benchmarks as a scatter plot.}\label{fig:fir}
+}
+\end{figure}
+
+\hypertarget{sec:conclusion}{%
+\chapter{Conclusion}\label{sec:conclusion}}
+
+The FPGA industry is a niche, closed industry where most data comes from manufacturers with no incentive to provide objective data. Having a neutral source of data that can help evaluate a platform or device is useful. Our software enables anyone to generate data tailored to their own needs.
+
+Based on our benchmarks and their results we can conclude that our software provides relevant insights into the performance of a target device. It also determines resource usage for the design being benchmarked. Both of these help improve the resource estimation, which was the intention of this thesis.
+
+Our methodology does require more work and time from the user than simply looking at a manufacturers statistics. Combined with the requirement for at least a basic knowledge of what the final project design will look like, in the form of selecting an appropriate benchmark design, we think it is unlikely that our program will become an industry standard. We consider our contribution valuable none the less.
+
+Our software makes it no longer required to manually generate many iterations of a design with different parameters to find out where the performance optimum lies. Initially we hoped to find a more universal measure to indicate performance, but as we progressed, we realized that the end user will always have to interpret the output data themselves. There simply is no way to represent this in a single statistic.
+
+We implemented our final benchmark and tested it successfully on Xilinx' Kintex-7 on Vivado. We then realized that NanoXplore was not a great choice as our secondary vendor due to its software issues. If we had noticed this sooner or if this was a longer running project, we could have implemented a third vendor. This would have allowed us to generate data for a second target on this benchmark to compare the Kintex-7 results with.
+
+The end user is still responsible for choosing and interpreting a good source of information. Whether that is the manufacturer, a third party, or custom generated data depends on the desired accuracy and the effort the user is willing to put into getting that accuracy.
+
+This project has shown us that benchmarking and performance estimation is a complex matter. The work done for this thesis provides a chance to explore more options than previously available. The addition of more vendor and software support, for starters the other big vendor Intel, would be welcomed. Another addition that can be explored is the a more comprehensive set of ``ready to use'' benchmarks designs and possibly even automatically generating benchmarks based on higher level designs.
+
+\hypertarget{references}{%
+\chapter*{References}\label{references}}
+\addcontentsline{toc}{chapter}{References}
+
+\renewcommand\bibsection{}
+\bibliography{bibliography}
+
+\hypertarget{sec:appendix}{%
+\chapter*{Digital Content}\label{sec:appendix}}
+\addcontentsline{toc}{chapter}{Digital Content}
+
+Contents of the included disk and/or USB key:
+
+\begin{itemize}
+\tightlist
+\item
+  This document in PDF form.
+\item
+  All figures, tables and code snippets in this document.
+\item
+  The compete source code of all programs written for this thesis.
+\item
+  All results in CSV format.
+\end{itemize}
+
+An online version is hosted on \href{https://thesis.dries007.net}{\texttt{thesis.dries007.net}}.\\
+The USB key has been made read-only to prevent accidental overwrites.\\
+
+\vfill
+
+\renewcommand{\addcontentsline}[3]{}
+
+\hypertarget{sec:mitLicense}{%
+\section*{MIT License}\label{sec:mitLicense}}
+\addcontentsline{toc}{section}{MIT License}
+
+\renewcommand{\addcontentsline}[3]{\oldaddcontentsline{#1}{#2}{#3}}
+
+All custom source code is released under the terms of the MIT license. The digital version of the source code includes a license header where it applies. It is omitted in the print version for brevity.
+
+\begin{minted}[linenos=no]{text}
+MIT License
+
+Copyright (c) 2019 Dries Kennes
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to
+deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.
+\end{minted}
+
+\begin{appendices}\renewcommand\chaptername{Appendix}
+
+\hypertarget{sec:AppendixCode}{%
+\chapter{Code}\label{sec:AppendixCode}}
+
+\hypertarget{sec:pythonpackage}{%
+\section{FPGAPerformanceSuite Python Package}\label{sec:pythonpackage}}
+
+The source code is too big to included in print. The full version is included digitally.
+
+\hypertarget{sec:RunnerExamples}{%
+\section{Runner examples}\label{sec:RunnerExamples}}
+
+\inputminted[fontsize=\footnotesize]{python}{appendix/runner_examples.py}
+
+\hypertarget{sec:bench2vhdl}{%
+\section{Converting .bench to VHDL}\label{sec:bench2vhdl}}
+
+The source code is too big to included in print. The full version is included digitally.
+
+\textbf{Example input:}
+
+\mintinline[]{text}{s27.bench}
+
+\inputminted[fontsize=\footnotesize]{text}{appendix/s27.bench}
+
+\textbf{Example output:}
+
+\mintinline[]{text}{s27.vhd}
+
+\inputminted[fontsize=\footnotesize]{vhdl}{appendix/s27.vhd}
+
+\hypertarget{sec:vivadofmax}{%
+\section{Vivado TCL Script}\label{sec:vivadofmax}}
+
+This is a shortened version for printing. The full version is included digitally.
+
+\inputminted[fontsize=\footnotesize]{tcl}{appendix/vivado_run.tcl}
+
+\hypertarget{sec:runnx}{%
+\section{NanoXplore Python Script}\label{sec:runnx}}
+
+\inputminted[fontsize=\footnotesize]{python}{appendix/nx_run.py}
+
+\hypertarget{sec:AppendixTop}{%
+\section{VHDL Top Module}\label{sec:AppendixTop}}
+
+This is a shortened version for printing. The implementation specific A and B sections have been removed. The full version is included digitally.
+
+\inputminted[fontsize=\footnotesize]{vhdl}{appendix/top.vhd}
+
+\hypertarget{miscellaneous}{%
+\chapter{Miscellaneous}\label{miscellaneous}}
+
+\hypertarget{sec:utilization_h}{%
+\section{Hierarchical Utilization Report}\label{sec:utilization_h}}
+
+To make the table fit on one page, the LUTRAMs, RAMB36, and RAMB18 columns were removed. The Instance and Module columns where shortened.
+
+These particular tables are from the \mintinline[]{text}{Vivado_2xFIR_10xS832} benchmark.
+
+This is the \mintinline[]{text}{Slice Logic} table in the \mintinline[]{text}{utilization.txt} report.
+
+\begin{minted}[linenos=no]{text}
++----------------------------+-------+-------+-----------+-------+
+|          Site Type         |  Used | Fixed | Available | Util% |
++----------------------------+-------+-------+-----------+-------+
+| Slice LUTs                 | 14254 |     0 |    254200 |  5.61 |
+|   LUT as Logic             | 14189 |     0 |    254200 |  5.58 |
+|   LUT as Memory            |    65 |     0 |     90600 |  0.07 |
+|     LUT as Distributed RAM |     0 |     0 |           |       |
+|     LUT as Shift Register  |    65 |     0 |           |       |
+| Slice Registers            | 20750 |     0 |    508400 |  4.08 |
+|   Register as Flip Flop    | 20750 |     0 |    508400 |  4.08 |
+|   Register as Latch        |     0 |     0 |    508400 |  0.00 |
+| F7 Muxes                   |     0 |     0 |    127100 |  0.00 |
+| F8 Muxes                   |     0 |     0 |     63550 |  0.00 |
++----------------------------+-------+-------+-----------+-------+
+\end{minted}
+
+The next table is the \mintinline[]{text}{Utilization by Hierarchy} table in the \mintinline[]{text}{utilization_h.txt} report. This table is not parsed by our software due to its complexity (both in terms of parsing and representing it). It can be examined by the end user when needed.
+
+\begin{landscape}
+\inputminted[fontsize=\footnotesize,linenos=no]{text}{appendix/utilization_h.txt}
+\end{landscape}
+
+\hypertarget{sec:firextragraphs}{%
+\section{FIR Filter With Filler Graphs}\label{sec:firextragraphs}}
+
+The graphs below show the same output data but grouped by filler instance count and FIR instance count respectively.
+
+\includegraphics{assets/fir_a.pdf}
+
+\includegraphics{assets/fir_b.pdf}
+
+\end{appendices}
+% bibliography
+%% nocite
+
+% include-after
+% START post_body.tex
+% END post_body.tex
+\cleardoublepage
+\clearpage\pagestyle{empty}\ifodd\value{page}\hbox{}\newpage\fi
+\includepdf{templates/back_nl.pdf}
+\end{document}

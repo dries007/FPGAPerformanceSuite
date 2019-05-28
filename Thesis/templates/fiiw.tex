@@ -1,0 +1,494 @@
+% LaTeX template for Pandoc for a Masters Thesis at KULeuven FIIW (Faculteit Industriele Ingenieurswetenschappen)
+% Author: Dries Kennes, 2018-2019
+% Thanks to Dylan Van Assche for fixing the provided FIIW template and helping me track down issues.
+% This is a merger of the Pandoc default latex and (bad) FFW templates.
+% Since there are about 7 documents claiming to be the "standard" we are supposed to use, I'm picking whichever I think looks best.
+% Feel free to use and modify. I offer no compliance warrany. USE AT OWN RISK.
+% 
+\pdfminorversion=7
+\PassOptionsToPackage{unicode=true$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%colorlinks
+$if(colorlinks)$
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*,table}{xcolor}
+$endif$
+%dir && latex-dir-rtl
+$if(dir)$$if(latex-dir-rtl)$
+\PassOptionsToPackage{RTLdocument}{bidi}
+$endif$$endif$%
+%fontsize, lang, papersize, classoption
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+%fontfamily
+$if(fontfamily)$
+\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
+$else$
+\usepackage{lmodern}
+$endif$
+%linestretch
+$if(linestretch)$
+\usepackage{setspace}
+\setstretch{$linestretch$}
+$endif$
+%%% INCLUDED PACKAGES IN FIIW TEMPLATE START
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}             % commentarieer deze regel uit als je utf8 encoded files gebruikt in plaats van latin1
+\usepackage{listings}                   % voor het weergeven van broncode
+\usepackage{verbatim}                   % weergeven van code, commando's, ...
+\usepackage[extension=]{hyperref}       % maak PDF van de thesis navigeerbaar
+\usepackage{url}                        % URL's invoegen in tekst met behulp van \url{http://}
+\usepackage[small,bf,hang]{caption}     % om de captions wat te verbeteren
+\usepackage[final]{pdfpages}            % gebruikt voor het invoegen van het artikel in pdf-formaat
+\usepackage{pslatex}                    % andere lettertype's dan de standaard types
+\usepackage{lipsum}                     %
+\usepackage{sectsty}                    % aanpassen van de fonts van sections en chapters
+\usepackage[nottoc,numbib]{tocbibind}   % Bibliography mee in de ToC
+\allsectionsfont{\sffamily}
+\chapterfont{\raggedleft\sffamily}
+\usepackage{float}                      % De optie H voor de plaatsing van figuren op de plaats waar je ze invoegt. bvb. \begin{figure}[H]
+\usepackage{longtable}                  % tabellen die over meerdere pagina's gespreid worden
+%\usepackage[times]{quotchap}            % indien je fancy hoofdstuktitels wil
+\usepackage[none]{hyphenat}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{parallel}
+\usepackage{textpos}
+\usepackage{fancyhdr} % Voor \pagestyle{fancy}
+\let\origdoublepage\cleardoublepage
+\newcommand{\clearemptydoublepage}{%
+  \clearpage
+  {\thispagestyle{empty}\origdoublepage}%
+}
+\let\cleardoublepage\clearemptydoublepage
+% Indentation
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.25ex}
+\setlength{\abovedisplayskip}{12pt plus 3pt}
+\setlength{\belowdisplayskip}{12pt plus 3pt}
+\setlength{\abovedisplayshortskip}{12pt plus 3pt}
+\setlength{\belowdisplayshortskip}{12pt plus 3pt}
+
+\parskip 1mm
+% MFA: Zet de table caption correct cfr. richtlijnen
+\captionsetup[table]{
+  labelsep = newline,
+  justification=centering,
+  singlelinecheck=false,%%%%%%% a single line is centered by default
+  labelsep=space,%%%%%%
+  skip = \medskipamount}
+
+%%% END
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+
+%\usepackage[nomain,acronym,xindy,toc,nopostdot]{glossaries} % nomain, if you define glossaries in a file, and you use \include{INP-00-glossary}
+\usepackage[nomain,acronym,xindy,toc,nogroupskip,stylemods=longragged,style=longragged3col,nonumberlist]{glossaries-extra} % nomain, if you define glossaries in a file, and you use \include{INP-00-glossary}
+%\setlength{\glspagelistwidth}{0.2\textwidth}
+% \GlsXtrEnablePreLocationTag{Page: }{Pages: }
+\makeglossaries
+\usepackage[xindy]{imakeidx}
+\makeindex
+
+% -- IF START
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  %\usepackage[utf8x]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+%mathspec
+$if(mathspec)$
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{unicode-math}
+  \fi
+$else$
+  \usepackage{unicode-math}
+$endif$
+%
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+$for(fontfamilies)$
+  \newfontfamily{$fontfamilies.name$}[$fontfamilies.options$]{$fontfamilies.font$}
+$endfor$
+$if(mainfont)$
+    \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+$endif$
+$if(romanfont)$
+	\setromanfont[$for(romanfontoptions)$$romanfontoptions$$sep$,$endfor$]{$romanfont$}
+$endif$
+$if(sansfont)$
+    \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+$endif$
+$if(monofont)$
+    \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
+$endif$
+%mathfont && mathspec
+$if(mathfont)$
+$if(mathspec)$
+  \ifxetex
+    \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+  \else
+    \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+  \fi
+$else$
+  \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+$endif$
+$endif$
+%CJKmainfont
+$if(CJKmainfont)$
+  \ifxetex
+    \usepackage{xeCJK}
+    \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
+  \fi
+$endif$
+%luatexjapresetoptions
+$if(luatexjapresetoptions)$
+  \ifluatex
+    \usepackage[$for(luatexjapresetoptions)$$luatexjapresetoptions$$sep$,$endfor$]{luatexja-preset}
+  \fi
+$endif$
+%CJKmainfont
+$if(CJKmainfont)$
+  \ifluatex
+    \usepackage[$for(luatexjafontspecoptions)$$luatexjafontspecoptions$$sep$,$endfor$]{luatexja-fontspec}
+    \setmainjfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
+  \fi
+$endif$
+\fi
+% -- IF END
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+%indent
+$if(indent)$
+$else$
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+$endif$
+%verbatim-in-note
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+%colorlinks
+$if(colorlinks)$
+\usepackage{xcolor}
+$endif$
+%
+\usepackage{hyperref}
+\hypersetup{
+%title-meta
+$if(title-meta)$
+            pdftitle={$title-meta$},
+$endif$
+%author-meta
+$if(author-meta)$
+            pdfauthor={$author-meta$},
+$endif$
+%keywords
+$if(keywords)$
+            pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+$endif$
+%colorlinks
+$if(colorlinks)$
+            colorlinks=true,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
+            filecolor=$if(filecolor)$$filecolor$$else$Maroon$endif$,
+            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
+$else$
+            pdfborder={0 0 0},
+$endif$
+            breaklinks=true}
+%\urlstyle{same}  % don't use monospace font for urls
+%verbatim-in-note
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+%geometry
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+%listings
+$if(listings)$
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+$endif$
+%lhs
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+%highlighting-macros
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+%tables
+$if(tables)$
+\usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{longtable}}{}
+$endif$
+%graphics
+$if(graphics)$
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+%links-as-notes
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\DeclareRobustCommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+%strikeout
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+%
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%numbersections
+$if(numbersections)$
+\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+%pagestyle
+$if(pagestyle)$
+\pagestyle{$pagestyle$}
+$endif$
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+%header-includes
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+%acronyms
+$for(acronyms)$
+$acronyms$
+$endfor$
+
+$if(lang)$
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+$if(babel-newcommands)$
+  $babel-newcommands$
+$endif$
+\else
+  % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+$for(polyglossia-otherlangs)$
+  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
+$endfor$
+\fi
+$endif$
+$if(dir)$
+\ifxetex
+  % load bidi as late as possible as it modifies e.g. graphicx
+  \usepackage{bidi}
+\fi
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \TeXXeTstate=1
+  \newcommand{\RL}[1]{\beginR #1\endR}
+  \newcommand{\LR}[1]{\beginL #1\endL}
+  \newenvironment{RTL}{\beginR}{\endR}
+  \newenvironment{LTR}{\beginL}{\endL}
+\fi
+$endif$
+$if(natbib)$
+\usepackage[$natbiboptions$]{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+$if(biblatex)$
+\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+$endif$
+
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+\providecommand{\subtitle}[1]{}
+\subtitle{$subtitle$}
+$endif$
+$if(author)$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+$if(institute)$
+\providecommand{\institute}[1]{}
+\institute{$for(institute)$$institute$$sep$ \and $endfor$}
+$endif$
+\date{$date$}
+% ----- START DOCUMENT -----
+\begin{document}
+\pagenumbering{gobble}
+%include-before
+$for(include-before)$
+$include-before$
+$endfor$
+% --- FIIW Title Page START
+\begingroup
+\definecolor{titlegreen}{RGB}{29,141,176}
+\thispagestyle{empty}
+\setlength{\unitlength}{1cm}
+\begin{picture}(0,0)(0,26)
+\hspace{-9em}\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{templates/cover_nl.pdf}
+\end{picture}
+\vspace{2em}
+\begin{flushright}
+%embargo
+$if(embargo)$
+\begingroup
+  \fontsize{14pt}{8pt}\selectfont EMBARGO: \\
+  \vspace{0.2em}
+\endgroup   
+\begingroup
+  \fontsize{10pt}{7pt}\selectfont 
+  Deze masterproefscriptie staat onder embargo tot $embargo$ \\
+\endgroup   
+$endif$
+\end{flushright}
+\vskip1in
+\vfill
+\begingroup
+  \fontsize{40pt}{12pt}\selectfont
+    \textcolor{titlegreen}{{\textsf{$title$}}} \\\\
+\endgroup
+{\LARGE\textsf{$subtitle$}}
+\vfill
+\begin{flushright}
+  $for(author)$
+  \textsf{\LARGE\textbf{$author$}}\\
+  $sep$\vspace{6pt}$endfor$
+\end{flushright}
+\vspace{10em}
+\begin{Parallel}{0.48\textwidth}{0.52\textwidth}
+  \ParallelLText{\noindent
+    \begin{list}{label}{\setlength{\leftmargin}{7em}\setlength{\labelsep}{0.5em}\setlength{\labelwidth}{8em}\setlength{\itemsep}{-.5ex}}
+      $for(promotor)$
+      \large\item[\textsf{$promotor.type$}\hfill] \textsf{$promotor.name$}
+      $endfor$
+      \end{list}
+  }
+  \ParallelRText{\noindent\vspace{1em}
+    \large\begin{flushright}
+      \textsf{Masterproef ingediend tot het behalen van \\
+        de graad van master of Science in de\\
+        industri\"ele wetenschappen: $opleiding$ $afdeling$}
+    \end{flushright}
+  }
+\end{Parallel}
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{0.75cm}
+\begin{flushright}
+  \textsf{$date$}
+\end{flushright}
+\endgroup
+% --- END
+$if(cite-style)$\setcitestyle{$cite-style$}$endif$
+% Title
+%$if(title)$
+%\maketitle
+%$endif$
+%copyright
+$if(copyright)$
+\clearpage
+\thispagestyle{empty}
+\pagenumbering{gobble}
+\null
+\vfill
+$copyright$
+\clearpage
+$endif$
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+%toc (Table of Contents)
+$if(toc)$
+$if(toc-title)$
+\renewcommand*\contentsname{$toc-title$}
+$endif$
+{
+$if(colorlinks)$
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
+$endif$
+\setcounter{tocdepth}{$toc-depth$}
+\begin{spacing}{0.5}
+\tableofcontents
+\end{spacing}
+\addcontentsline{toc}{chapter}{\contentsname}
+}
+$endif$
+%lot (List of Figures)
+$if(lot)$
+\begin{spacing}{0.5}
+\listoftables
+\end{spacing}
+\phantomsection
+%\addcontentsline{toc}{chapter}{\listtablename}
+$endif$
+%lof (List of Tables)
+$if(lof)$
+\begin{spacing}{0.5}
+\listoffigures
+\end{spacing}
+\phantomsection
+%\addcontentsline{toc}{chapter}{\listfigurename}
+$endif$
+%glossary
+$if(glossary)$
+\printglossary[title=List of Symbols and Abbreviations]
+$endif$
+% ==== DOCUMENT BODY
+\cleardoublepage
+\pagenumbering{arabic}
+$body$
+% bibliography
+%% nocite
+$for(nocite)$
+\nocite{$nocite$}
+$endfor$
+
+$if(biblatex)$
+$if(beamer)$
+\begin{frame}[allowframebreaks]{$biblio-title$}
+\bibliographytrue
+\printbibliography[heading=none]
+\end{frame}
+$else$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+$endif$
+$endif$
+% include-after
+$for(include-after)$
+$include-after$
+$endfor$
+\cleardoublepage
+\clearpage\pagestyle{empty}\ifodd\value{page}\hbox{}\newpage\fi
+\includepdf{templates/back_nl.pdf}
+\end{document}
