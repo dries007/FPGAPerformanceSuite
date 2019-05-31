@@ -1,11 +1,3 @@
----
-author: Dries Kennes
-date: 2019-05-28
-title: Readme - FPGA Performance Suite
-papersize: a4
-geometry: a4paper
----
-
 # FPGA Performance Suite
 
 Thesis project for my Master of Science in Electronics and ICT Engineering Technology at KULeuven, Campus De Nayer.
@@ -17,11 +9,9 @@ This code and related documents are hosted on [GitHub](https://github.com/dries0
 ## Contents
 
 + [Documents](Documents): The thesis document and the interim report.
-  + [DriesKennes_Thesis_Digital.pdf](Documents/DriesKennes_Thesis_Digital.pdf): A PDF with more content in the appendix. 
-        _Contains direct links to the other files in this repository._
   + [DriesKennes_Thesis_Print.pdf](Documents/DriesKennes_Thesis_Print.pdf): The PDF as originally printed.
-  + [Interim_Report](Documents/Interim_Report): All files from the interim report.
   + [Appendix](Documents/Appendix): All files included in the printed thesis text and appendix.
+  + [Interim_Report](Documents/Interim_Report): All files from the interim report.
 + [Thesis](Thesis): The source code for the thesis documents.
 + [ISCAS89](ISCAS89): The ISCAS'89 benchmark set and related materials.
 + [VHDL](VHDL): All custom VHDL code.
