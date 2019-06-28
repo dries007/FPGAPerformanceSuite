@@ -12,6 +12,7 @@ This code and related documents are hosted on [GitHub](https://github.com/dries0
   + [DriesKennes_Thesis_Print.pdf](Documents/DriesKennes_Thesis_Print.pdf): The PDF as originally printed.
   + [Appendix](Documents/Appendix): All files included in the printed thesis text and appendix.
   + [Interim_Report](Documents/Interim_Report): All files from the interim report.
+  + [DriesKennes_Thesis_Presentation.pdf](Documents/DriesKennes_Thesis_Presentation.pdf): The thesis defense presentation.
 + [Thesis](Thesis): The source code for the thesis documents.
 + [ISCAS89](ISCAS89): The ISCAS'89 benchmark set and related materials.
 + [VHDL](VHDL): All custom VHDL code.
